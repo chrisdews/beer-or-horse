@@ -22,7 +22,7 @@ Models:
     - User has many Questions through Quiz, A Question has many Users through Quiz (join table - Quiz)
     - A Question has many Beers
     - A Question has many Horses
-    
+
 
 Logic thoughts
     - how to avoid the same names appearing when you restart
