@@ -14,7 +14,8 @@ DatabaseCleaner.clean
 
 Beer.delete_all
 Horse.delete_all
-Question.delete_all
+BeerQuestion.delete_all
+HorseQuestion.delete_all
 Quiz.delete_all
 User.delete_all
 
@@ -81,19 +82,19 @@ horse_name = [
 ]
 
 beer_name.each do |name|
-    Beer.create(name: name) 
+    Beer.create(name: name)
 end
 
 horse_name.each do |name|
-    Horse.create(name: name) 
+    Horse.create(name: name)
 end
 
-testuser = User.create(email: 'test@test.com', name: 'test')
+testuser = User.create(name: 'test')
 testquiz = Quiz.create(user_id: 1, score: 0)
-testquestion1 = Question.create(beer_id: 1, horse_id: 1, quiz_id: 1)
-testquestion2 = Question.create(beer_id: 2, horse_id: 2, quiz_id: 1)
-testquestion3 = Question.create(beer_id: 3, horse_id: 3, quiz_id: 1)
-testquestion4 = Question.create(beer_id: 4, horse_id: 4, quiz_id: 1)
+testquestion1 = BeerQuestion.create(beer_id: 1, quiz_id: 1)
+testquestion2 = HorseQuestion.create(horse_id: 2, quiz_id: 1)
+testquestion3 = BeerQuestion.create(beer_id: 3, quiz_id: 1)
+testquestion4 = HorseQuestion.create(horse_id: 4, quiz_id: 1)
 
 
 
