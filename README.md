@@ -19,9 +19,9 @@ Stretch goals:
 
 Models:
 ￼
-    - User has many Questions through Quiz, A Question has many Users through Quiz (join table - Quiz)
-    - A Question has many Beers
-    - A Question has many Horses
+	- User has many Questions through Quiz, A Question has many Users through Quiz (join table - Quiz)
+	- A Beer has many Questions
+	- A Horse has many Questions
 
 
 Logic thoughts
