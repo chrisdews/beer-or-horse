@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     // request was via http, so redirect to https
     res.redirect('https://' + req.headers.host + req.url);
   }
-})
+});
 app.use(express.static(path.join(__dirname)));
 // app.get('/*', function (req, res) {
 //   res.sendFile(path.join(__dirname, 'index.html'));
