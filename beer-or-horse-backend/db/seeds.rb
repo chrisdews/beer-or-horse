@@ -6,6 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.clean
+
+
 Beer.delete_all
 Horse.delete_all
 Question.delete_all
@@ -83,8 +89,11 @@ horse_name.each do |name|
 end
 
 testuser = User.create(email: 'test@test.com', name: 'test')
+testquiz = Quiz.create(user_id: 1, score: 0)
+testquestion1 = Question.create(beer_id: 1, horse_id: 1, quiz_id: 1)
+testquestion2 = Question.create(beer_id: 2, horse_id: 2, quiz_id: 1)
+testquestion3 = Question.create(beer_id: 3, horse_id: 3, quiz_id: 1)
+testquestion4 = Question.create(beer_id: 4, horse_id: 4, quiz_id: 1)
 
-testquiz = Quiz.create(user_id: testuser, score: 0)
 
-testquestion = Question.create(beer_id: 1, horse_id: 1, quiz_id: testquiz)
 
