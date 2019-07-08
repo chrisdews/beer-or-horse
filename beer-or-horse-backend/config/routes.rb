@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :beer_questions
   root 'welcome#index'
   resources :quizzes
   resources :horses

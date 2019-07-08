@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_130143) do
+ActiveRecord::Schema.define(version: 2019_07_08_173646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beer_questions", force: :cascade do |t|
+    t.bigint "beer_id"
+    t.bigint "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beer_id"], name: "index_beer_questions_on_beer_id"
+    t.index ["quiz_id"], name: "index_beer_questions_on_quiz_id"
+  end
 
   create_table "beers", force: :cascade do |t|
     t.string "name"
@@ -21,21 +30,19 @@ ActiveRecord::Schema.define(version: 2019_07_08_130143) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "horse_questions", force: :cascade do |t|
+    t.bigint "horse_id"
+    t.bigint "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["horse_id"], name: "index_horse_questions_on_horse_id"
+    t.index ["quiz_id"], name: "index_horse_questions_on_quiz_id"
+  end
+
   create_table "horses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "questions", force: :cascade do |t|
-    t.bigint "beer_id"
-    t.bigint "horse_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "quiz_id"
-    t.index ["beer_id"], name: "index_questions_on_beer_id"
-    t.index ["horse_id"], name: "index_questions_on_horse_id"
-    t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 
   create_table "quizzes", force: :cascade do |t|
@@ -47,15 +54,14 @@ ActiveRecord::Schema.define(version: 2019_07_08_130143) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "email"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email"
   end
 
-  add_foreign_key "questions", "beers"
-  add_foreign_key "questions", "horses"
-  add_foreign_key "questions", "quizzes"
+  add_foreign_key "beer_questions", "beers"
+  add_foreign_key "beer_questions", "quizzes"
+  add_foreign_key "horse_questions", "horses"
+  add_foreign_key "horse_questions", "quizzes"
   add_foreign_key "quizzes", "users"
 end

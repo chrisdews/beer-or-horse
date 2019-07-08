@@ -1,3 +1,3 @@
 class Horse < ApplicationRecord
-  has_many :questions
+  has_many :horse_questions
 end

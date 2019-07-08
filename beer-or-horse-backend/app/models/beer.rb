@@ -1,3 +1,3 @@
 class Beer < ApplicationRecord
-  has_many :questions
+  has_many :beer_questions
 end
