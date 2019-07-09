@@ -6,7 +6,7 @@ class HorseQuestionsController < ApplicationController
 
   def create
     # pull a random horse
-    quiz = Quiz.find_by(id: params[:quiz])
+    quiz = Quiz.find_by(id: params[:quiz_id])
     horse_question = HorseQuestion.createHorseQuestion(quiz)
     render json: horse_question, except: [:created_at, :updated_at]
   end
@@ -20,5 +20,4 @@ class HorseQuestionsController < ApplicationController
   def horse_question_params
     params.require(:horse_question).permit(:quiz_id)
   end
-end
 end

@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def update

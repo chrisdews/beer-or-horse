@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :beer_questions
+  resources :horse_questions
   root 'welcome#index'
   resources :quizzes
   resources :horses
