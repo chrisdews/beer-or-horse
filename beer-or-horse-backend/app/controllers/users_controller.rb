@@ -2,17 +2,13 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    users = User.all
+    render json: users, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def create
     @user = User.create user_params
-    if @user.valid?
-      redirect_to login_path
-    else
-      flash[:errors] = @user.errors.full_messages
-      redirect_to new_user_path
-    end
+    render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def new
@@ -40,6 +36,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name)
   end
 end
