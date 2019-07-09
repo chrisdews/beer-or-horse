@@ -1,8 +1,8 @@
 // Check if the session is being ran locally
 if (window.location.href.includes('heroku')) {
-  BASE_URL = 'https://beer-or-horse.herokuapp.com/'
+  BASE_URL = 'https://beer-or-horse.herokuapp.com/';
 } else {
-  BASE_URL = 'http://localhost:3000'
+  BASE_URL = 'http://localhost:3000';
 }
 
 const USERS_URL = `${BASE_URL}/users`;
@@ -27,11 +27,11 @@ let answer;
 rulesButton.addEventListener('click', e => {
   rulesShow = !rulesShow;
   if (rulesShow) {
-    showRules()
+    showRules();
   } else {
-    hideRules()
+    hideRules();
   }
-})
+});
 
 readButton.addEventListener('click', hideRules);
 
@@ -60,8 +60,8 @@ function newUser(username) {
     .then(beginGame);
 }
 
-function newQuiz (user) {
-  currentUser = user
+function newQuiz(user) {
+  currentUser = user;
   newQuizObj = {
     'user_id': user.id,
     'score': 0
@@ -74,71 +74,75 @@ function newQuiz (user) {
       body: JSON.stringify(newQuizObj)
     })
     .then(resp => resp.json())
-    .then(addButtonFunctionality)
+    .then(addButtonFunctionality);
 }
 
 function addButtonFunctionality(quiz) {
 
-  h1 = document.querySelector('#game-location')
+  h1 = document.querySelector('#game-location');
 
-  horseButton = document.createElement('button')
-  beerButton = document.createElement('button')
-  horseButton.id = 'horse-button'
-  beerButton.id = 'beer-button'
-  horseButton.className = 'btn btn-danger btn-lg'
-  beerButton.className = 'btn btn-danger btn-lg'
-  horseButton.innerText = 'horse'
-  beerButton.innerText = 'beer'
+  horseButton = document.createElement('button');
+  beerButton = document.createElement('button');
+  horseButton.id = 'horse-button';
+  beerButton.id = 'beer-button';
+  horseButton.className = 'btn btn-danger btn-lg';
+  beerButton.className = 'btn btn-danger btn-lg';
+  horseButton.innerText = 'horse';
+  beerButton.innerText = 'beer';
 
-  loc.append(horseButton, beerButton)
+  loc.append(horseButton, beerButton);
 
-  horseButton.addEventListener('click', e => {horseCheck(quiz)})
-  beerButton.addEventListener('click', e => {beerCheck(quiz)})
-  newQuestion(quiz)
+  horseButton.addEventListener('click', e => {
+    horseCheck(quiz)
+  });
+  beerButton.addEventListener('click', e => {
+    beerCheck(quiz)
+  });
+  newQuestion(quiz);
 
 }
 
-function horseCheck(quiz){
+function horseCheck(quiz) {
   if (answer === 'horse') {
     increaseScore(quiz)
-    .then(newQuestion(quiz))
+      .then(newQuestion(quiz));
   } else {
     // loseQuiz(quiz)
-    newQuiz(currentUser)
+    newQuiz(currentUser);
   }
-  console.log(quiz)
+  console.log(quiz);
 }
 
-function beerCheck(quiz){
+function beerCheck(quiz) {
   if (answer === 'beer') {
     increaseScore(quiz)
-    .then(newQuestion(quiz))
+      .then(newQuestion(quiz));
   } else {
     // loseQuiz(quiz)
-    newQuiz(currentUser)
+    newQuiz(currentUser);
   }
-  console.log(quiz)
+  console.log(quiz);
 }
 
 function increaseScore(quiz) {
   ++quiz.score
-    fetch(`${QUIZZES_URL}/${quiz.id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(quiz)
-  }).then(response => response.json())
-    .then(quiz => console.log(quiz.score))
+  fetch(`${QUIZZES_URL}/${quiz.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quiz)
+    }).then(response => response.json())
+    .then(quiz => console.log(quiz.score));
 }
 
 function newQuestion(quiz) {
   // coin flip method
-  random = Math.floor(Math.random() * 2)
+  random = Math.floor(Math.random() * 2);
   if (random === 1) {
-    newBeerQuestion(quiz)
+    newBeerQuestion(quiz);
   } else {
-    newHorseQuestion(quiz)
+    newHorseQuestion(quiz);
   }
 }
 
@@ -167,29 +171,29 @@ function newHorseQuestion(quiz) {
       })
     })
     .then(resp => resp.json())
-    .then(question => askQuestion(quiz, question))
+    .then(question => askQuestion(quiz, question));
 }
 
 function beginGame(user) {
   h1 = document.createElement('h1')
-  loc = document.querySelector('#game-location')
-  h1.innerText = `WELCOME TO BEER OR HORSE, ${user.name.toUpperCase()}`
-  loc.append(h1)
-  newQuiz(user)
+  loc = document.querySelector('#game-location');
+  h1.innerText = `WELCOME TO BEER OR HORSE, ${user.name.toUpperCase()}`;
+  loc.append(h1);
+  newQuiz(user);
 }
 
 function showRules() {
-  rulesCard.style.display = 'block'
+  rulesCard.style.display = 'block';
 }
 
 function hideRules() {
-  rulesCard.style.display = 'none'
+  rulesCard.style.display = 'none';
 }
 
 function askQuestion(quiz, question) {
   if (question['beer_id']) {
     getBeerName(question.beer_id)
-      .then(beer => beerQuestion(beer, quiz))
+      .then(beer => beerQuestion(beer, quiz));
   } else {
     getHorseName(question.horse_id)
       .then(horse => horseQuestion(horse, quiz))
