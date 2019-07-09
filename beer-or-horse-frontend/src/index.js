@@ -5,27 +5,27 @@ if (window.location.href.includes('heroku')) {
   BASE_URL = 'http://localhost:3000'
 }
 
-const USERS_URL = `${BASE_URL}/users`
-const QUIZZES_URL = `${BASE_URL}/quizzes`
-const BEERS_URL = `${BASE_URL}/beers`
-const HORSES_URL = `${BASE_URL}/horses`
-const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`
-const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`
+const USERS_URL = `${BASE_URL}/users`;
+const QUIZZES_URL = `${BASE_URL}/quizzes`;
+const BEERS_URL = `${BASE_URL}/beers`;
+const HORSES_URL = `${BASE_URL}/horses`;
+const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`;
+const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`;
 
-const rulesCard = document.querySelector('#rules-card')
-const rulesButton = document.querySelector('#rules-button')
-const startButton = document.querySelector('#start-button')
-const readButton = document.querySelector('#read-button')
-const usernameInput = document.querySelector('#input-username')
+const rulesCard = document.querySelector('#rules-card');
+const rulesButton = document.querySelector('#rules-button');
+const startButton = document.querySelector('#start-button');
+const readButton = document.querySelector('#read-button');
+const usernameInput = document.querySelector('#input-username');
 
-let rulesShow = false
-let currentUser
-let answer
+let rulesShow = false;
+let currentUser;
+let answer;
 
 // add event listener to rulesCard
 
 rulesButton.addEventListener('click', e => {
-  rulesShow = !rulesShow
+  rulesShow = !rulesShow;
   if (rulesShow) {
     showRules()
   } else {
@@ -33,16 +33,16 @@ rulesButton.addEventListener('click', e => {
   }
 })
 
-readButton.addEventListener('click', hideRules)
+readButton.addEventListener('click', hideRules);
 
-startButton.addEventListener('click', startGame)
+startButton.addEventListener('click', startGame);
 
 function startGame() {
-  startButton.style.display = 'none'
-  rulesButton.style.display = 'none'
+  startButton.style.display = 'none';
+  rulesButton.style.display = 'none';
   hideRules()
   username = usernameInput.value
-  usernameInput.style.display = 'none'
+  usernameInput.style.display = 'none';
   newUser(username)
 }
 
