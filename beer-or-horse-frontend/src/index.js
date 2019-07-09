@@ -45,36 +45,38 @@ function startGame() {
 
 function newUser(username) {
   fetch(USERS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({'name': username})
-  })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'name': username
+      })
+    })
     .then(resp => resp.json())
-    .then(beginGame)
+    .then(beginGame);
 }
 
-function newQuiz (user){
+function newQuiz(user) {
   newQuizObj = {
     'user_id': user.id,
     'score': 0
-  }
-  console.log(newQuizObj)
+  };
+  console.log(newQuizObj);
   fetch(QUIZZES_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newQuizObj)
-  })
-  .then(resp => resp.json())
-  hideRules()
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuizObj)
+    })
+    .then(resp => resp.json());
+  hideRules();
   // .then ()
 }
 
 
-function newQuestion (quiz) {
+function newQuestion(quiz) {
   //coin flip method
   random = Math.floor(Math.random() * 2);
   if (random === 1) {
@@ -86,31 +88,31 @@ function newQuestion (quiz) {
 
 function newBeerQuestion(quiz) {
   fetch(BEER_QUESTIONS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'quiz_id': quiz.id,
+      })
     })
-  })
-  .then(resp => resp.json())
+    .then(resp => resp.json())
 }
 
 function newHorseQuestion(quiz) {
   fetch(HORSE_QUESTIONS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'quiz_id': quiz.id,
+      })
     })
-  })
-  .then(resp => resp.json())
+    .then(resp => resp.json())
 }
 
-function beginGame (user) {
+function beginGame(user) {
   h1 = document.createElement('h1')
   loc = document.querySelector('#game-location')
   h1.innerText = `WELCOME TO BEER OR HORSE, ${user.name.toUpperCase()}`
@@ -123,12 +125,12 @@ function showRules() {
   rulesCard.style.display = 'block';
 }
 
-function hideRules () {
+function hideRules() {
   rulesCard.style.display = 'none'
 }
 
 // button to launch quiz, make get request to create a new quiz session.
-// Goes straight into the first question, randomizes 
+// Goes straight into the first question, randomizes
 // fetch POST to save new quiz
 // fetch get a randomly generated question?
 // event listeners on horse/beer buttons
