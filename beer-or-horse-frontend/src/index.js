@@ -59,6 +59,7 @@ function newUser (username) {
 }
 
 function newQuiz (user) {
+  currentUser = user
   newQuizObj = {
     'user_id': user.id,
     'score': 0
@@ -71,7 +72,62 @@ function newQuiz (user) {
     body: JSON.stringify(newQuizObj)
   })
     .then(resp => resp.json())
-    .then(newQuestion)
+    .then(addButtonFunctionality)
+}
+
+function addButtonFunctionality(quiz) {
+
+  h1 = document.querySelector('#game-location')
+
+  horseButton = document.createElement('button')
+  beerButton = document.createElement('button')
+  horseButton.id = 'horse-button'
+  beerButton.id = 'beer-button'
+  horseButton.className = 'btn btn-danger btn-lg'
+  beerButton.className = 'btn btn-danger btn-lg'
+  horseButton.innerText = 'horse'
+  beerButton.innerText = 'beer'
+
+  loc.append(horseButton, beerButton)
+
+  horseButton.addEventListener('click', e => {horseCheck(quiz)})
+  beerButton.addEventListener('click', e => {beerCheck(quiz)})
+  newQuestion(quiz)
+
+}
+
+function horseCheck(quiz){
+  if (answer === 'horse') {
+    increaseScore(quiz)
+    .then(newQuestion(quiz))
+  } else {
+    // loseQuiz(quiz)
+    newQuiz(currentUser)
+  }
+  console.log(quiz)
+}
+
+function beerCheck(quiz){
+  if (answer === 'beer') {
+    increaseScore(quiz)
+    .then(newQuestion(quiz))
+  } else {
+    // loseQuiz(quiz)
+    newQuiz(currentUser)
+  }
+  console.log(quiz)
+}
+
+function increaseScore(quiz) {
+  ++quiz.score
+    fetch(`${QUIZZES_URL}/${quiz.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(quiz)
+  }).then(response => response.json())
+    .then(quiz => console.log(quiz.score))
 }
 
 function newQuestion (quiz) {
