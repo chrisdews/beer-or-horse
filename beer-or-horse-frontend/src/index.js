@@ -40,10 +40,10 @@ startButton.addEventListener('click', startGame);
 function startGame() {
   startButton.style.display = 'none';
   rulesButton.style.display = 'none';
-  hideRules()
-  username = usernameInput.value
+  hideRules();
+  username = usernameInput.value;
   usernameInput.style.display = 'none';
-  newUser(username)
+  newUser(username);
 }
 
 function newUser(username) {
@@ -65,7 +65,7 @@ function newQuiz(user) {
   newQuizObj = {
     'user_id': user.id,
     'score': 0
-  }
+  };
   fetch(QUIZZES_URL, {
       method: 'POST',
       headers: {
@@ -93,10 +93,10 @@ function addButtonFunctionality(quiz) {
   loc.append(horseButton, beerButton);
 
   horseButton.addEventListener('click', e => {
-    horseCheck(quiz)
+    horseCheck(quiz);
   });
   beerButton.addEventListener('click', e => {
-    beerCheck(quiz)
+    beerCheck(quiz);
   });
   newQuestion(quiz);
 
@@ -125,7 +125,7 @@ function beerCheck(quiz) {
 }
 
 function increaseScore(quiz) {
-  ++quiz.score
+  ++quiz.score;
   fetch(`${QUIZZES_URL}/${quiz.id}`, {
       method: 'PATCH',
       headers: {
@@ -157,7 +157,7 @@ function newBeerQuestion(quiz) {
       })
     })
     .then(resp => resp.json())
-    .then(question => askQuestion(quiz, question))
+    .then(question => askQuestion(quiz, question));
 }
 
 function newHorseQuestion(quiz) {
@@ -211,21 +211,21 @@ function getHorseName(id) {
 }
 
 function horseQuestion(horse, quiz) {
-  answer = 'horse'
-  h1 = document.querySelector('h1')
-  h3 = document.createElement('h3')
-  h3.innerText = horse.name
-  h1.append(h3)
-  console.log(answer, quiz)
+  answer = 'horse';
+  h1 = document.querySelector('h1');
+  h3 = document.createElement('h3');
+  h3.innerText = horse.name;
+  h1.append(h3);
+  console.log(answer, quiz);
 }
 
 function beerQuestion(beer, quiz) {
-  answer = 'beer'
-  h1 = document.querySelector('h1')
-  h3 = document.createElement('h3')
-  h3.innerText = beer.name
-  h1.append(h3)
-  console.log(answer, quiz)
+  answer = 'beer';
+  h1 = document.querySelector('h1');
+  h3 = document.createElement('h3');
+  h3.innerText = beer.name;
+  h1.append(h3);
+  console.log(answer, quiz);
 }
 
 // button to launch quiz, make get request to create a new quiz session.
