@@ -140,28 +140,14 @@ function newQuestion(quiz) {
   // coin flip method
   random = Math.floor(Math.random() * 2);
   if (random === 1) {
-    newBeerQuestion(quiz);
+    newBeerQuestion(quiz, BEER_QUESTIONS_URL);
   } else {
-    newHorseQuestion(quiz);
+    newHorseQuestion(quiz, HORSE_QUESTIONS_URL);
   }
 }
 
-function newBeerQuestion(quiz) {
-  fetch(BEER_QUESTIONS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'quiz_id': quiz.id
-      })
-    })
-    .then(resp => resp.json())
-    .then(question => askQuestion(quiz, question));
-}
-
-function newHorseQuestion(quiz) {
-  fetch(HORSE_QUESTIONS_URL, {
+function NewQuestion(quiz, url) {
+  fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -175,7 +161,7 @@ function newHorseQuestion(quiz) {
 }
 
 function beginGame(user) {
-  h1 = document.createElement('h1')
+  h1 = document.createElement('h1');
   loc = document.querySelector('#game-location');
   h1.innerText = `WELCOME TO BEER OR HORSE, ${user.name.toUpperCase()}`;
   loc.append(h1);
@@ -191,23 +177,28 @@ function hideRules() {
 }
 
 function askQuestion(quiz, question) {
-  if (question['beer_id']) {
-    getBeerName(question.beer_id)
-      .then(beer => beerQuestion(beer, quiz));
+  if (question.beer_id) {
+    getName(question.beer_id, BEERS_URL)
+      .then(beer => populateQuestion(beer, quiz));
   } else {
-    getHorseName(question.horse_id)
-      .then(horse => horseQuestion(horse, quiz))
+    getName(question.horse_id, HORSES_URL)
+      .then(horse => populateQuestion(horse, quiz));
   }
 }
 
-function getBeerName(id) {
-  return fetch(`${BEERS_URL}/${id}`)
-    .then(response => response.json())
+function getName(id, url) {
+  return fetch(`${url}/${id}`)
+    .then(response => response.json());
 }
 
-function getHorseName(id) {
-  return fetch(`${HORSES_URL}/${id}`)
-    .then(response => response.json())
+function populateQuestion(answer, quiz) {
+  solution = answer.to_s; // gimme a sec, this could be good.
+  console.log(solution);
+  h1 = document.querySelector('h1');
+  h3 = document.createElement('h3');
+  h3.innerText = answer.name;
+  h1.append(h3);
+  console.log(solution, quiz);
 }
 
 function horseQuestion(horse, quiz) {
