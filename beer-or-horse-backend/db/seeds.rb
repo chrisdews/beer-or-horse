@@ -11,6 +11,22 @@ require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation
 DatabaseCleaner.clean
 
+require 'csv'
+
+beerFilePath = Rails.root.join('lib', 'seeds', 'beers.csv')
+horseFilePath = Rails.root.join('lib', 'seeds', 'horses.csv')
+
+CSV.foreach(beerFilePath, headers: true) do |row|
+    Beer.create({
+        name: row[0]
+    })
+end
+
+CSV.foreach(horseFilePath, headers: true) do |row|
+    Horse.create({
+        name: row[0]
+    })
+end
 
 Beer.delete_all
 Horse.delete_all
