@@ -36,7 +36,7 @@ function startGame() {
   rulesButton.style.display = 'none';
   username = usernameInput.value;
   usernameInput.style.display = 'none';
-  newUser(username)
+  newUser(username);
 }
 
 function newUser(username) {
@@ -56,7 +56,7 @@ function newUser(username) {
 function beginGame(user) {
   h1 = document.createElement('h1');
   loc = document.querySelector('#game-location');
-  h1.innerText = `WELCOME TO BEER OR HORSE ${user.name}`;
+  h1.innerText = `WELCOME TO BEER OR HORSE ${user.name.toUpperCase()}`;
   loc.append(h1);
 }
 
