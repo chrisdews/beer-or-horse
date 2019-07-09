@@ -13,6 +13,7 @@ class QuizzesController < ApplicationController
 
 
   def show
+    render json: @quiz, except: [:updated_at, :created_at]
   end
 
   def update
