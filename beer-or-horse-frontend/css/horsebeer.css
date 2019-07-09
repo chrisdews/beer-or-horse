@@ -1,0 +1,39 @@
+/* add custom css here. overwrite bootstrap classes if needed but better to write your own */
+
+/* example */
+
+body {
+    background-color: ANTIQUEWHITE;
+}
+
+#start-button {
+    margin-top: 40px;
+}
+
+.add-margin-top-10 {
+    margin-top: 10%;
+}
+
+.add-margin-top-8 {
+    margin-top: 8%;
+}
+
+
+.custom-align-center {
+    text-align: center;
+}
+
+#grass-footer {
+    width: 110%;
+    position: fixed;
+    bottom: 0px;
+}
+#rules-card{
+    width: 18rem; 
+    margin-top: 10px; 
+    display: none
+}
+
+#rules-button{
+    margin: 20px;
+}

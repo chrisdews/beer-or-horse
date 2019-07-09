@@ -123,13 +123,13 @@ function beerCheck(quiz){
 function increaseScore(quiz) {
   ++quiz.score
     fetch(`${QUIZZES_URL}/${quiz.id}`, {
-    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(quiz)
   }).then(response => response.json())
     .then(quiz => console.log(quiz.score))
+    .catch(err => console.error(err))
 }
 
 function newQuestion(quiz) {
