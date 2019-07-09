@@ -25,7 +25,7 @@ rulesButton.addEventListener('click', e => {
   } else {
     hideRules();
   }
-})
+});
 
 readButton.addEventListener('click', hideRules);
 
