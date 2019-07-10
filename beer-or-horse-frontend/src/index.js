@@ -294,17 +294,17 @@ function getName(id, url) {
 
 // get all quizzes and sort em
 
-const quizzesArray = async () => {
-  const data = await fetch(QUIZZES_URL)
-  const quizzesArray = await data.json()
-  console.log(quizzesArray)
-  quizzesArray.sort((a, b) => a.score - b.score);
-}
+// const quizzesArray = async () => {
+//   const data = await fetch(QUIZZES_URL)
+//   const quizzesArray = await data.json()
+//   console.log(quizzesArray)
+//   quizzesArray.sort((a, b) => a.score - b.score);
+// }
 
 function getLeaderboard() {
   return fetch(QUIZZES_URL)
     .then(resp => resp.json())
-    .then(allQuizzes => allQuizzes.sort((a, b) => a.score - b.score))
+    .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
     .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
     .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
     .then(console.log)
