@@ -11,20 +11,13 @@ class UsersController < ApplicationController
     render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
-  def new
-    @user = User.new
-  end
-
-  def edit
-  end
-
   def show
     render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def update
     @user.update user_params
-    redirect_to user_path(@user)
+    render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def destroy
