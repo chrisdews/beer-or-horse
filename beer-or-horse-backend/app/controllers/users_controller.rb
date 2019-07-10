@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def update
     @user.update user_params
-    redirect_to user_path(@user)
+    render json: @user, except: [:email, :password_digest, :updated_at, :created_at]
   end
 
   def destroy
