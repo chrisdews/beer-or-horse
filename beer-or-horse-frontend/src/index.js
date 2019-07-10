@@ -40,7 +40,7 @@ readButton.addEventListener('click', hideRules)
 
 startButton.addEventListener('click', startGame)
 
-function startGame () {
+function startGame() {
   startButton.style.display = 'none'
   rulesButton.style.display = 'none'
   hideRules()
@@ -51,42 +51,42 @@ function startGame () {
   newUser(username)
 }
 
-function newUser (username) {
+function newUser(username) {
   if (currentUser) {
     beginGame(currentUser)
   } else {
     fetch(USERS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'name': username
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'name': username
+        })
       })
-    })
       .then(resp => resp.json())
       .then(beginGame)
   }
 }
 
-function newQuiz (user) {
+function newQuiz(user) {
   currentUser = user
   newQuizObj = {
     'user_id': user.id,
     'score': 0
   }
   fetch(QUIZZES_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newQuizObj)
-  })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuizObj)
+    })
     .then(resp => resp.json())
     .then(addButtonFunctionality)
 }
 
-function addButtonFunctionality (quiz) {
+function addButtonFunctionality(quiz) {
   h1 = document.querySelector('#game-location')
 
   horseButton = document.createElement('button')
@@ -109,7 +109,7 @@ function addButtonFunctionality (quiz) {
   newQuestion(quiz)
 }
 
-function horseCheck (quiz) {
+function horseCheck(quiz) {
   if (answer === 'horse') {
     questionLocation.lastChild.style.color = 'green'
     increaseScore(quiz)
@@ -122,7 +122,7 @@ function horseCheck (quiz) {
   console.log(quiz)
 }
 
-function beerCheck (quiz) {
+function beerCheck(quiz) {
   if (answer === 'beer') {
     questionLocation.lastChild.style.color = 'green'
     increaseScore(quiz)
@@ -135,7 +135,7 @@ function beerCheck (quiz) {
   console.log(quiz)
 }
 
-function loseQuiz (quiz) {
+function loseQuiz(quiz) {
   firstGame = false
   buttons = document.querySelectorAll('button')
   buttons.forEach(button => {
@@ -149,11 +149,10 @@ function loseQuiz (quiz) {
   tryAgainButton.addEventListener('click', e => {
     tryAgainButton.remove()
     startGame()
-  }
-  )
+  })
 }
 
-function increaseScore (quiz) {
+function increaseScore(quiz) {
   ++quiz.score
   return fetch(`${QUIZZES_URL}/${quiz.id}`, {
     method: 'PATCH',
@@ -164,98 +163,81 @@ function increaseScore (quiz) {
   }).then(response => response.json())
 }
 
-function newQuestion (quiz) {
-  // coin flip method
-  random = Math.floor(Math.random() * 2)
-  if (random === 1) {
-    newBeerQuestion(quiz)
-  } else {
-    newHorseQuestion(quiz)
-  }
-}
-
-function newBeerQuestion (quiz) {
-  fetch(BEER_QUESTIONS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id
-    })
-  })
-    .then(resp => resp.json())
-    .then(question => askQuestion(quiz, question))
-}
-
-function newHorseQuestion (quiz) {
-  fetch(HORSE_QUESTIONS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id
-    })
-  })
-    .then(resp => resp.json())
-    .then(question => askQuestion(quiz, question))
-}
-
-function beginGame (user) {
-  if (firstGame) {
-    currentUser = user
-    h1 = document.createElement('h1')
-    loc = document.querySelector('#game-location')
-    h1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
-    loc.append(h1)
-  }
+function beginGame(user) {
+  h1 = document.createElement('h1')
+  loc = document.querySelector('#game-location')
+  h1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
+  loc.append(h1)
   newQuiz(user)
 }
 
-function showRules () {
+function showRules() {
   rulesCard.style.display = 'block'
 }
 
-function hideRules () {
+function hideRules() {
   rulesCard.style.display = 'none'
 }
 
-function askQuestion (quiz, question) {
-  if (question['beer_id']) {
-    getBeerName(question.beer_id)
-      .then(beer => beerQuestion(beer, quiz))
-  } else {
-    getHorseName(question.horse_id)
-      .then(horse => horseQuestion(horse, quiz))
-  }
-}
-
-function getBeerName (id) {
-  return fetch(`${BEERS_URL}/${id}`)
-    .then(response => response.json())
-}
-
-function getHorseName (id) {
-  return fetch(`${HORSES_URL}/${id}`)
-    .then(response => response.json())
-}
-
-function horseQuestion (horse, quiz) {
-  answer = 'horse'
-  h1 = document.createElement('h1')
-  h1.innerText = horse.name
-  questionLocation.append(h1)
+function horseQuestion(horse, quiz) {
+  answer = 'horse';
+  h1 = document.createElement('h1');
+  h1.innerText = horse.name;
+  questionLocation.append(h1);
   console.log(answer, quiz)
 }
 
-function beerQuestion (beer, quiz) {
+function beerQuestion(beer, quiz) {
   answer = 'beer'
   h1 = document.createElement('h1')
   h1.innerText = beer.name
   questionLocation.append(h1)
   console.log(answer, quiz)
 }
+
+
+function newQuestion(quiz) {
+  random = Math.floor(Math.random() * 2)
+  if (random === 1) {
+    questionRequest(quiz, BEER_QUESTIONS_URL);
+    console.log(quiz)
+
+  } else {
+    questionRequest(quiz, HORSE_QUESTIONS_URL);
+    console.log(quiz)
+
+  }
+}
+
+function questionRequest(quiz, url) {
+  fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'quiz_id': quiz.id
+      })
+    })
+    .then(resp => resp.json())
+    .then(question => askQuestion(quiz, question))
+}
+
+function askQuestion(quiz, question) {
+  if (question.beer_id) {
+    getName(question.beer_id, BEERS_URL)
+      .then(beer => beerQuestion(beer, quiz));
+  } else {
+    getName(question.horse_id, HORSES_URL)
+      .then(horse => horseQuestion(horse, quiz));
+  }
+}
+
+function getName(id, url) {
+  return fetch(`${url}/${id}`)
+    .then(response => response.json());
+}
+
 
 // function countdown (seconds) {
 //   questionLocation.innerHTML = ''
