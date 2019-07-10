@@ -275,6 +275,8 @@ const getAllQuizzes = async () => {
 
 // get the top 5 scores
 
+
+
 // get the user ids for those scores
 
 // print out user names and scores
