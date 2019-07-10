@@ -20,6 +20,10 @@ const usernameInput = document.querySelector('#input-username')
 const questionLocation = document.querySelector('#question-location')
 const gameLocation = document.querySelector('#game-location')
 const topScoreLocation = document.querySelector('#top-score-location')
+const leaderboardLocation = document.querySelector('#leaderboard-location')
+const leaderboardTableLocation = document.querySelector('#leaderboard-table')
+
+
 
 let rulesShow = false
 let currentUser
@@ -284,22 +288,6 @@ function getName(id, url) {
 //   }, 1000)
 //   return seconds
 // };
-// button to launch quiz, make get request to create a new quiz session.
-// Goes straight into the first question, randomizes
-// fetch POST to save new quiz
-// fetch get a randomly generated question?
-// event listeners on horse/beer buttons
-
-// LEADERBOARD
-
-// get all quizzes and sort em
-
-// const quizzesArray = async () => {
-//   const data = await fetch(QUIZZES_URL)
-//   const quizzesArray = await data.json()
-//   console.log(quizzesArray)
-//   quizzesArray.sort((a, b) => a.score - b.score);
-// }
 
 function getLeaderboard() {
   return fetch(QUIZZES_URL)
@@ -307,10 +295,31 @@ function getLeaderboard() {
     .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
     .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
     .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
-    .then(console.log)
+    .then(leaderboard => renderLeaderboard(leaderboard))
 }
 
-getLeaderboard()
+function renderLeaderboard(leaderboard) {
+  leaderboard.forEach(quiz => {
+    const index = leaderboard.indexOf(quiz)
+    user = getName(quiz.user_id, USERS_URL)
+      .then(user => renderLeaderboardRow(user, quiz, index))
+  })
+}
+
+function renderLeaderboardRow(user, quiz, index) {
+  const leaderboardRow = document.querySelector(`#leaderboard-row-${index}`);
+
+
+  let nameTd = document.createElement('td');
+  nameTd.innerText = user.name
+  leaderboardRow.appendChild(nameTd);
+
+  let scoreTd = document.createElement('td');
+  scoreTd.innerText = quiz.score
+  leaderboardRow.appendChild(scoreTd);
+}
+
+getLeaderboard();
 
 function getUnique(arr, comp) {
   const unique = arr
