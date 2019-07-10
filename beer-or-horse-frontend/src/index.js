@@ -23,6 +23,7 @@ const gameLocation = document.querySelector('#game-location')
 let rulesShow = false
 let currentUser
 let answer
+let firstGame = true
 
 // add event listener to rulesCard
 
@@ -51,17 +52,21 @@ function startGame() {
 }
 
 function newUser(username) {
-  fetch(USERS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'name': username
+  if (currentUser) {
+    beginGame(currentUser)
+  } else {
+    fetch(USERS_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'name': username
+        })
       })
-    })
-    .then(resp => resp.json())
-    .then(beginGame)
+      .then(resp => resp.json())
+      .then(beginGame)
+  }
 }
 
 function newQuiz(user) {
@@ -131,7 +136,20 @@ function beerCheck(quiz) {
 }
 
 function loseQuiz(quiz) {
-  gameLocation.children[1].innerText = `YOU SCORED: ${quiz.score}`
+  firstGame = false
+  buttons = document.querySelectorAll('button')
+  buttons.forEach(button => {
+    button.remove()
+  })
+  tryAgainButton = document.createElement('button')
+  tryAgainButton.innerText = 'Try Again... IF YOU DARE'
+  tryAgainButton.className = 'btn btn-danger btn-lg'
+  gameLocation.children[1].innerText = `LAST SCORE: ${quiz.score}`
+  gameLocation.append(tryAgainButton)
+  tryAgainButton.addEventListener('click', e => {
+    tryAgainButton.remove()
+    startGame()
+  })
 }
 
 function increaseScore(quiz) {
