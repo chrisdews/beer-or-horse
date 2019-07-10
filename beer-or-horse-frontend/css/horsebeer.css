@@ -10,11 +10,11 @@ body {
     margin-top: 40px;
 }
 
-.add-margin-top-10 {
+.add-margin-top-6 {
     margin-top: 6%;
 }
 
-.add-margin-top-8 {
+.add-margin-top-4 {
     margin-top: 4%;
 }
 
@@ -42,7 +42,7 @@ body {
 #horse-button{
     margin-right: 50px;
     margin-top: 30px;
-    margin-left: 40px
+    margin-left: 50px
 }
 
 #beer-button{

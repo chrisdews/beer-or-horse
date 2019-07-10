@@ -301,23 +301,23 @@ function getName(id, url) {
 //   quizzesArray.sort((a, b) => a.score - b.score);
 // }
 
-function getLeaderboard() {
-  return fetch(QUIZZES_URL)
-    .then(resp => resp.json())
-    .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
-    .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
-    .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
-    .then(console.log)
-}
+// function getLeaderboard() {
+//   return fetch(QUIZZES_URL)
+//     .then(resp => resp.json())
+//     .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
+//     .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
+//     .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
+//     .then(console.log)
+// }
 
-getLeaderboard()
+// getLeaderboard()
 
-const getAllQuizzes = async () => {
-  const data = await fetch(QUIZZES_URL)
-  const quizzesArray = await data.json()
-  quizzesArray.sort((a,b) => (a.score) - (b.score))
-  console.log(quizzesArray)
-}
+// const getAllQuizzes = async () => {
+//   const data = await fetch(QUIZZES_URL)
+//   const quizzesArray = await data.json()
+//   quizzesArray.sort((a,b) => (a.score) - (b.score))
+//   console.log(quizzesArray)
+// }
 
 // function getUnique(arr, comp) {
 //   const unique = arr
