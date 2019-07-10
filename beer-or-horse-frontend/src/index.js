@@ -184,12 +184,12 @@ function updateUserScore (user, score) {
  }
 
 function beginGame (user) {
-  middleH1 = document.createElement('h1')
+  // middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location')
-  middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
+  // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
   topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} TOP SCORE:`
   topScoreLocation.children[1].innerText = user.top_score
-  loc.append(middleH1)
+  // loc.append(middleH1)
   newQuiz(user)
 }
 
