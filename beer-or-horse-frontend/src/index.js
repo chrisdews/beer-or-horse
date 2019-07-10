@@ -235,23 +235,23 @@ function beerQuestion (beer, quiz) {
   console.log(answer, quiz)
 }
 
-function countdown (seconds) {
-  questionLocation.innerHTML = ''
-  h1countdown = document.createElement('h1')
-  questionLocation.append(h1countdown)
-  h1countdown.innerText = seconds
-  var counter = seconds
+// function countdown (seconds) {
+//   questionLocation.innerHTML = ''
+//   h1countdown = document.createElement('h1')
+//   questionLocation.append(h1countdown)
+//   h1countdown.innerText = seconds
+//   var counter = seconds
 
-  var interval = setInterval(() => {
-    h1countdown.innerText = counter
-    counter--
-    if (counter < 0) {
-      clearInterval(interval)
-      h1countdown.innerText = 'GO!'
-    };
-  }, 1000)
-  return seconds
-};
+//   var interval = setInterval(() => {
+//     h1countdown.innerText = counter
+//     counter--
+//     if (counter < 0) {
+//       clearInterval(interval)
+//       h1countdown.innerText = 'GO!'
+//     };
+//   }, 1000)
+//   return seconds
+// };
 // button to launch quiz, make get request to create a new quiz session.
 // Goes straight into the first question, randomizes
 // fetch POST to save new quiz
