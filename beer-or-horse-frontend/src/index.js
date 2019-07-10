@@ -154,6 +154,7 @@ function loseQuiz(quiz) {
   h1.innerText = `LAST SCORE: ${quiz.score}`
   gameLocation.append(h1, tryAgainButton)
   updateUserScore(currentUser, quiz.score)
+  getLeaderboard();
   tryAgainButton.addEventListener('click', e => {
     tryAgainButton.remove()
     startGame()
@@ -189,7 +190,7 @@ function updateUserScore(user, score) {
   }
 }
 
-function beginGame (user) {
+function beginGame(user) {
   // middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location')
   // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
@@ -299,6 +300,13 @@ function getLeaderboard() {
 }
 
 function renderLeaderboard(leaderboard) {
+  // clear function replaces innerHTML
+  leaderboardTableLocation.innerHTML =
+    '<tr id=leaderboard-row-0></tr>' +
+    '<tr id=leaderboard-row-1></tr>' +
+    '<tr id=leaderboard-row-2></tr>' +
+    '<tr id=leaderboard-row-3></tr>' +
+    '<tr id=leaderboard-row-4></tr>'
   leaderboard.forEach(quiz => {
     const index = leaderboard.indexOf(quiz)
     user = getName(quiz.user_id, USERS_URL)
@@ -324,19 +332,19 @@ getLeaderboard();
 const getAllQuizzes = async () => {
   const data = await fetch(QUIZZES_URL)
   const quizzesArray = await data.json()
-  quizzesArray.sort((a,b) => (a.score) - (b.score))
+  quizzesArray.sort((a, b) => (a.score) - (b.score))
   console.log(quizzesArray)
 }
 
-// function getUnique(arr, comp) {
-//   const unique = arr
-//     .map(e => e[comp])
-//     // store the keys of the unique objects
-//     .map((e, i, final) => final.indexOf(e) === i && i)
-//     // eliminate the dead keys & store unique objects
-//     .filter(e => arr[e]).map(e => arr[e]);
-//   return unique;
-// }
+function getUnique(arr, comp) {
+  const unique = arr
+    .map(e => e[comp])
+    // store the keys of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+    // eliminate the dead keys & store unique objects
+    .filter(e => arr[e]).map(e => arr[e]);
+  return unique;
+}
 
 // get the top 5 scores
 
