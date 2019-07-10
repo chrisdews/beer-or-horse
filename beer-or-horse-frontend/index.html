@@ -7,43 +7,65 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Beer or Horse?</title>
-  <link rel="stylesheet" href="bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/horsebeer.css">
+
   <script src="https://kit.fontawesome.com/2089a23db9.js"></script>
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <!-- <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="index.html">BEER OR HORSE?</a>
         
         <i class="fas fa-beer"></i>
         <i class="fas fa-question"></i>
         <i class="fas fa-horse"></i>
-        </nav>
-        <div class="container" style="margin-bottom: 120px">
+    </nav> -->
+    <div class="row title-row custom-align-center add-margin-top-10">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm" id="question-location">
+        <h5>Welcome to</h5>
+        <h1>Beer or Horse!</h1>
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+    <div class="row add-margin-top-8">
+        <div class="col-sm">
         </div>
-        <form class="form-inline"></form>
-        <div class="form-group mx-sm-3 mb-2">
+        <!-- end of col1 -->
+        <div class="col-sm">
+          <form class="form-inline"></form>
+            <div class="form-group mx-sm-3 mb-2">
                 <label for="input-username" class="sr-only">Username</label>
                 <input type="text" class="form-control" id="input-username" placeholder="Enter your name">
-              </div>
-            </form>
-            <div class="container" id="game-location">
+            </div>
+          </form>
+          <div class="container" id="game-location">
                 <div class="row">
                   <div class="col text-center">
                     <button class="btn btn-danger btn-lg" id="start-button">Start Game</button>
                   </div>
                 </div>
-              </div>
-              <div class="container" style="margin-bottom: 120px"></div>
-              <div class="container">
-                    <div class="row">
-                      <div class="col text-center">
-                        <button class="btn btn-warning btn-lg" id="rules-button">Rules and Shite</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card mx-auto" id="rules-card" style="width: 18rem; margin-top: 10px; display: none">
+          </div>
+        </div>
+        <!-- end of col2 -->
+        <div class="col-sm">
+        </div>
+        <!-- end of col3 -->
+    </div>
+    <!-- end of row -->
+
+        
+    <div class="row">
+      <div class="col text-center">
+        <button class="btn btn-warning btn-lg" id="rules-button">Rules and Shite</button>
+      </div>
+    </div>
+    <div class="row rules"></div>
+      <div class="card mx-auto" id="rules-card">
                         <div class="card-body">
                                 <div class="col text-center">
                           <h5 class="card-title">RULES</h5>
@@ -51,9 +73,14 @@
                           <a href="#" class="btn btn-primary" id="read-button">I've read this</a>
                           </div>
                         </div>
-                      </div>          
+      </div>
+    </div>  
+        
+    <div class="row grass">
+      <img src="img/grass.png" alt="grass" id="grass-footer">
+    </div>
 
-                      <script type="text/javascript" src="src/index.js"></script>
+    <script type="text/javascript" src="src/index.js"></script>
 </body>
 
 </html>

@@ -18,7 +18,7 @@ class QuizzesController < ApplicationController
 
   def update
     @quiz.update quiz_params
-    redirect_to quiz_path(@quiz)
+    render json: @quiz, except: [:updated_at, :created_at]
   end
 
   def destroy
@@ -31,6 +31,6 @@ class QuizzesController < ApplicationController
   end
 
   def quiz_params
-    params.require(:quiz).permit(:user_id, :score)
+    params.require(:quiz).permit(:id, :user_id, :score)
   end
 end
