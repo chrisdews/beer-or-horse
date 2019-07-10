@@ -11,11 +11,11 @@ body {
 }
 
 .add-margin-top-10 {
-    margin-top: 10%;
+    margin-top: 6%;
 }
 
 .add-margin-top-8 {
-    margin-top: 8%;
+    margin-top: 4%;
 }
 
 
@@ -36,4 +36,21 @@ body {
 
 #rules-button{
     margin: 20px;
+}
+
+#horse-button{
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-left: 40px
+}
+
+#beer-button{
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-left: 50px
+}
+
+#game-location{
+    justify-content: center;
+    text-align: center;
 }
