@@ -144,7 +144,7 @@ function loseQuiz (quiz) {
   tryAgainButton = document.createElement('button')
   tryAgainButton.innerText = 'Try Again... IF YOU DARE'
   tryAgainButton.className = 'btn btn-danger btn-lg'
-  gameLocation.children[1].innerText = `YOU SCORED: ${quiz.score}`
+  gameLocation.children[1].innerText = `LAST SCORE: ${quiz.score}`
   gameLocation.append(tryAgainButton)
   tryAgainButton.addEventListener('click', e => {
     tryAgainButton.remove()
