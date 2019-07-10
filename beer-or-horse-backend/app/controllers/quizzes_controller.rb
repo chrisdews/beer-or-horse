@@ -18,7 +18,7 @@ class QuizzesController < ApplicationController
 
   def update
     @quiz.update quiz_params
-    redirect_to quiz_path(@quiz)
+    render json: @quiz, except: [:updated_at, :created_at]
   end
 
   def destroy

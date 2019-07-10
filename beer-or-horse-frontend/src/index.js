@@ -57,7 +57,7 @@ function newUser(username) {
       })
     })
     .then(resp => resp.json())
-    .then(beginGame);
+    .then(beginGame)
 }
 
 function newQuiz(user) {
@@ -140,13 +140,13 @@ function newQuestion(quiz) {
   // coin flip method
   random = Math.floor(Math.random() * 2);
   if (random === 1) {
-    newBeerQuestion(quiz, BEER_QUESTIONS_URL);
+    questionRequest(quiz, BEER_QUESTIONS_URL);
   } else {
-    newHorseQuestion(quiz, HORSE_QUESTIONS_URL);
+    questionRequest(quiz, HORSE_QUESTIONS_URL);
   }
 }
 
-function NewQuestion(quiz, url) {
+function questionRequest(quiz, url) {
   fetch(url, {
       method: 'POST',
       headers: {
