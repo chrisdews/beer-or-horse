@@ -27,6 +27,7 @@ body {
     width: 110%;
     position: fixed;
     bottom: 0px;
+    z-index: -1
 }
 #rules-card{
     width: 18rem; 
@@ -58,5 +59,4 @@ body {
 #top-score-location{
     justify-content: center;
     text-align: center;
-    padding-top: 100px
 }

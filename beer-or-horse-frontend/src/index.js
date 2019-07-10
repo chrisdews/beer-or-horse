@@ -295,6 +295,7 @@ function getName (id, url) {
 const getAllQuizzes = async () => {
   const data = await fetch(QUIZZES_URL)
   const quizzesArray = await data.json()
+  quizzesArray.sort((a,b) => (a.score) - (b.score))
   console.log(quizzesArray)
 }
 
