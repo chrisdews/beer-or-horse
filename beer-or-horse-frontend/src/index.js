@@ -1,6 +1,6 @@
 // Check if the session is being ran locally
 if (window.location.href.includes('heroku')) {
-  BASE_URL = 'https://beer-or-horse.herokuapp.com/'
+  BASE_URL = 'https://beer-or-horse-backend.herokuapp.com/'
 } else {
   BASE_URL = 'http://localhost:3000'
 }
