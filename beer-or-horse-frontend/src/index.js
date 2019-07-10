@@ -41,7 +41,7 @@ readButton.addEventListener('click', hideRules)
 
 startButton.addEventListener('click', startGame)
 
-function startGame () {
+function startGame() {
   startButton.style.display = 'none'
   rulesButton.style.display = 'none'
   hideRules()
@@ -52,42 +52,42 @@ function startGame () {
   newUser(username)
 }
 
-function newUser (username) {
+function newUser(username) {
   if (currentUser) {
     beginGame(currentUser)
   } else {
     fetch(USERS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'name': username
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'name': username
+        })
       })
-    })
       .then(resp => resp.json())
       .then(beginGame)
   }
 }
 
-function newQuiz (user) {
+function newQuiz(user) {
   currentUser = user
   newQuizObj = {
     'user_id': user.id,
     'score': 0
   }
   fetch(QUIZZES_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newQuizObj)
-  })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuizObj)
+    })
     .then(resp => resp.json())
     .then(addButtonFunctionality)
 }
 
-function addButtonFunctionality (quiz) {
+function addButtonFunctionality(quiz) {
   h1 = document.querySelector('#game-location')
 
   horseButton = document.createElement('button')
@@ -110,7 +110,7 @@ function addButtonFunctionality (quiz) {
   newQuestion(quiz)
 }
 
-function horseCheck (quiz) {
+function horseCheck(quiz) {
   if (answer === 'horse') {
     questionLocation.lastChild.style.color = 'green'
     increaseScore(quiz)
@@ -123,7 +123,7 @@ function horseCheck (quiz) {
   console.log(quiz)
 }
 
-function beerCheck (quiz) {
+function beerCheck(quiz) {
   if (answer === 'beer') {
     questionLocation.lastChild.style.color = 'green'
     increaseScore(quiz)
@@ -136,7 +136,7 @@ function beerCheck (quiz) {
   console.log(quiz)
 }
 
-function loseQuiz (quiz) {
+function loseQuiz(quiz) {
   firstGame = false
   buttons = document.querySelectorAll('button')
   buttons.forEach(button => {
@@ -156,7 +156,7 @@ function loseQuiz (quiz) {
   })
 }
 
-function increaseScore (quiz) {
+function increaseScore(quiz) {
   ++quiz.score
   return fetch(`${QUIZZES_URL}/${quiz.id}`, {
     method: 'PATCH',
@@ -167,23 +167,25 @@ function increaseScore (quiz) {
   }).then(response => response.json())
 }
 
-function updateUserScore (user, score) {
+function updateUserScore(user, score) {
   if (user.top_score <= score) {
     return fetch(`${USERS_URL}/${user.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ top_score: score }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        method: 'PATCH',
+        body: JSON.stringify({
+          top_score: score
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then(response => response.json())
       .then(user => {
         currentUser = user
       })
   }
- }
+}
 
-function beginGame (user) {
+function beginGame(user) {
   middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location')
   middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
@@ -193,15 +195,15 @@ function beginGame (user) {
   newQuiz(user)
 }
 
-function showRules () {
+function showRules() {
   rulesCard.style.display = 'block'
 }
 
-function hideRules () {
+function hideRules() {
   rulesCard.style.display = 'none'
 }
 
-function horseQuestion (horse, quiz) {
+function horseQuestion(horse, quiz) {
   answer = 'horse'
   h1 = document.createElement('h1')
   h1.innerText = horse.name
@@ -210,7 +212,7 @@ function horseQuestion (horse, quiz) {
   console.log(answer, quiz)
 }
 
-function beerQuestion (beer, quiz) {
+function beerQuestion(beer, quiz) {
   answer = 'beer'
   h1 = document.createElement('h1')
   h1.innerText = beer.name
@@ -219,13 +221,13 @@ function beerQuestion (beer, quiz) {
   console.log(answer, quiz)
 }
 
-function checkQuestionLength () {
+function checkQuestionLength() {
   if (questionLocation.childNodes.length === 5) {
     questionLocation.childNodes[0].remove()
   }
 }
 
-function newQuestion (quiz) {
+function newQuestion(quiz) {
   random = Math.floor(Math.random() * 2)
   if (random === 1) {
     questionRequest(quiz, BEER_QUESTIONS_URL)
@@ -236,21 +238,21 @@ function newQuestion (quiz) {
   }
 }
 
-function questionRequest (quiz, url) {
+function questionRequest(quiz, url) {
   fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'quiz_id': quiz.id
+      })
     })
-  })
     .then(resp => resp.json())
     .then(question => askQuestion(quiz, question))
 }
 
-function askQuestion (quiz, question) {
+function askQuestion(quiz, question) {
   if (question.beer_id) {
     getName(question.beer_id, BEERS_URL)
       .then(beer => beerQuestion(beer, quiz))
@@ -260,7 +262,7 @@ function askQuestion (quiz, question) {
   }
 }
 
-function getName (id, url) {
+function getName(id, url) {
   return fetch(`${url}/${id}`)
     .then(response => response.json())
 }
@@ -290,17 +292,37 @@ function getName (id, url) {
 
 // LEADERBOARD
 
-// get all quizzes
+// get all quizzes and sort em
 
-const getAllQuizzes = async () => {
+const quizzesArray = async () => {
   const data = await fetch(QUIZZES_URL)
   const quizzesArray = await data.json()
   console.log(quizzesArray)
+  quizzesArray.sort((a, b) => a.score - b.score);
+}
+
+function getLeaderboard() {
+  return fetch(QUIZZES_URL)
+    .then(resp => resp.json())
+    .then(allQuizzes => allQuizzes.sort((a, b) => a.score - b.score))
+    .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
+    .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
+    .then(console.log)
+}
+
+getLeaderboard()
+
+function getUnique(arr, comp) {
+  const unique = arr
+    .map(e => e[comp])
+    // store the keys of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+    // eliminate the dead keys & store unique objects
+    .filter(e => arr[e]).map(e => arr[e]);
+  return unique;
 }
 
 // get the top 5 scores
-
-
 
 // get the user ids for those scores
 

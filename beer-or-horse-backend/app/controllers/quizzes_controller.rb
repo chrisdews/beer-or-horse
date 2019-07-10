@@ -1,10 +1,10 @@
 class QuizzesController < ApplicationController
   before_action :find_quiz, only: [:show, :edit, :update, :destroy]
 
-  def leaderboard
-    leaderboard = Quiz.order('score DESC').first(5)
-    # leaderboard = orderedQuizzes.select(:user_id).distinct.map
-  end
+  # def self.leaderboard
+  #   leaderboard = Quiz.order('score DESC').first(5)
+  #   # leaderboard = orderedQuizzes.select(:user_id).distinct.map
+  # end
 
   def index
     quizzes = Quiz.all
