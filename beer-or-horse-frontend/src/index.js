@@ -279,3 +279,20 @@ function beerQuestion (beer, quiz) {
 // fetch POST to save new quiz
 // fetch get a randomly generated question?
 // event listeners on horse/beer buttons
+
+
+// LEADERBOARD
+
+// get all quizzes
+
+const getAllQuizzes = async () => {
+  const data = await fetch(QUIZZES_URL);
+  const quizzesArray = await data.json();
+  console.log(quizzesArray)
+}
+
+// get the top 5 scores
+
+// get the user ids for those scores
+
+// print out user names and scores
