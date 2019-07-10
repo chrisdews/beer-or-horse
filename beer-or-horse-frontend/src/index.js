@@ -23,6 +23,7 @@ const gameLocation = document.querySelector('#game-location')
 let rulesShow = false
 let currentUser
 let answer
+let firstGame = true
 
 // add event listener to rulesCard
 
@@ -46,22 +47,26 @@ function startGame () {
   questionLocation.innerHTML = ''
   username = usernameInput.value
   usernameInput.style.display = 'none'
-  countdown(3)
+  // countdown(3)
   newUser(username)
 }
 
 function newUser (username) {
-  fetch(USERS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'name': username
+  if (currentUser) {
+    beginGame(currentUser)
+  } else {
+    fetch(USERS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'name': username
+      })
     })
-  })
-    .then(resp => resp.json())
-    .then(beginGame)
+      .then(resp => resp.json())
+      .then(beginGame)
+  }
 }
 
 function newQuiz (user) {
@@ -130,8 +135,22 @@ function beerCheck (quiz) {
   console.log(quiz)
 }
 
-function loseQuiz(quiz) {
+function loseQuiz (quiz) {
+  firstGame = false
+  buttons = document.querySelectorAll('button')
+  buttons.forEach(button => {
+    button.remove()
+  })
+  tryAgainButton = document.createElement('button')
+  tryAgainButton.innerText = 'Try Again... IF YOU DARE'
+  tryAgainButton.className = 'btn btn-danger btn-lg'
   gameLocation.children[1].innerText = `YOU SCORED: ${quiz.score}`
+  gameLocation.append(tryAgainButton)
+  tryAgainButton.addEventListener('click', e => {
+    tryAgainButton.remove()
+    startGame()
+  }
+  )
 }
 
 function increaseScore (quiz) {
@@ -184,10 +203,13 @@ function newHorseQuestion (quiz) {
 }
 
 function beginGame (user) {
-  h1 = document.createElement('h1')
-  loc = document.querySelector('#game-location')
-  h1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
-  loc.append(h1)
+  if (firstGame) {
+    currentUser = user
+    h1 = document.createElement('h1')
+    loc = document.querySelector('#game-location')
+    h1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
+    loc.append(h1)
+  }
   newQuiz(user)
 }
 
@@ -220,10 +242,10 @@ function getHorseName (id) {
 }
 
 function horseQuestion (horse, quiz) {
-  answer = 'horse';
-  h1 = document.createElement('h1');
-  h1.innerText = horse.name;
-  questionLocation.append(h1);
+  answer = 'horse'
+  h1 = document.createElement('h1')
+  h1.innerText = horse.name
+  questionLocation.append(h1)
   console.log(answer, quiz)
 }
 
