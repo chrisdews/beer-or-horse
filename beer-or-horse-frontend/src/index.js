@@ -11,6 +11,7 @@ const BEERS_URL = `${BASE_URL}/beers`
 const HORSES_URL = `${BASE_URL}/horses`
 const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`
 const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`
+const cable = ActionCable.createConsumer("ws://localhost:3000/cable")
 
 const rulesCard = document.querySelector('#rules-card')
 const rulesButton = document.querySelector('#rules-button')
@@ -29,6 +30,12 @@ let rulesShow = false
 let currentUser
 let answer
 let firstGame = true
+
+// Actioncable stuff
+
+cable.subscriptions.create("QuizChannel",{
+  received: data => {console.log(data, "just started a game")}
+})
 
 // add event listener to rulesCard
 
@@ -294,7 +301,7 @@ function getLeaderboard() {
   return fetch(QUIZZES_URL)
     .then(resp => resp.json())
     .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
-    .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
+    .then(sortedQuizzes => getUnique(sortedQuizzes))
     .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
     .then(leaderboard => renderLeaderboard(leaderboard))
 }
@@ -307,9 +314,9 @@ function renderLeaderboard(leaderboard) {
     '<tr id=leaderboard-row-2></tr>' +
     '<tr id=leaderboard-row-3></tr>' +
     '<tr id=leaderboard-row-4></tr>'
-  leaderboard.forEach(quiz => {
+      leaderboard.forEach(quiz => {
     const index = leaderboard.indexOf(quiz)
-    user = getName(quiz.user_id, USERS_URL)
+    user = getName(quiz.user.id, USERS_URL)
       .then(user => renderLeaderboardRow(user, quiz, index))
   })
 }
@@ -336,13 +343,13 @@ const getAllQuizzes = async () => {
   console.log(quizzesArray)
 }
 
-function getUnique(arr, comp) {
-  const unique = arr
-    .map(e => e[comp])
+function getUnique(quizzes) {
+  const unique = quizzes
+    .map(quiz => quiz.user["id"])
     // store the keys of the unique objects
     .map((e, i, final) => final.indexOf(e) === i && i)
     // eliminate the dead keys & store unique objects
-    .filter(e => arr[e]).map(e => arr[e]);
+    .filter(e => quizzes[e]).map(e => quizzes[e]);
   return unique;
 }
 
@@ -351,3 +358,17 @@ function getUnique(arr, comp) {
 // get the user ids for those scores
 
 // print out user names and scores
+
+
+// // action cable attempt
+// function openConnection(){
+//   return new WebSocket("ws://localhost:3000/cable")
+// }
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const userWebSocket = openConnection()
+//   userWebSocket.onopen = (event) => {
+//     const subscribeMsg = {"command":"subscribe","identifier":"{\"channel\":\"QuizChannel\"}"}
+//     userWebSocket.send(JSON.stringify(subscribeMsg))
+//   }
+// })
