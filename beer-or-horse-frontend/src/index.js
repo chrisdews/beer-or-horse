@@ -40,15 +40,24 @@ cable.subscriptions.create("QuizChannel",{
 
 function addGameStartedNotifications(data){
     let para = document.querySelector(`#update${counter}`)
-    console.log(data)
+    resetAnimation(para)
     let updatetext = data
     para.innerText = updatetext
+    para.style.webkitAnimation = ''
     para.className = 'new-player-notification text-blur-out'
     if (counter === 5) {counter = 0}
     counter += 1;
 }
 
-// how do we create cable to get user scores when they are posts at certain increments?
+function resetAnimation(para){
+  para.style.animation = 'none'
+  para.offsetHeight
+  // trigger reflow
+  para.style.animation = null
+
+}
+
+// how do we create cable to get user scores at certain increments?
 
 
 
@@ -123,6 +132,7 @@ function addButtonFunctionality(quiz) {
   preHorseDiv.className = 'col-sm';
   horseDiv = document.createElement('div');
   horseButton.id = 'horse-button';
+  horseButton.className = 'game-button'
   horseButton.setAttribute("src", 'img/horse-face.png');
   horseDiv.className = 'col-xs';
   horseDiv.append(horseButton);
@@ -132,6 +142,7 @@ function addButtonFunctionality(quiz) {
   postBeerDiv.className = 'col-sm';
   beerDiv = document.createElement('div');
   beerButton.id = 'beer-button';
+  beerButton.className = 'game-button'
   beerButton.setAttribute("src", 'img/beer-mug.png');
   beerDiv.className = 'col-xs';
   beerDiv.append(beerButton);
@@ -200,9 +211,14 @@ function loseQuiz(quiz) {
   tryAgainButton.innerText = 'Try Again... IF YOU DARE';
   tryAgainButton.className = 'btn btn-danger btn-lg';
   gameLocation.innerHTML = '';
-  h1 = document.createElement('h1');
-  h1.innerText = `LAST SCORE: ${quiz.score}`;
-  gameLocation.append(h1, tryAgainButton);
+
+  const gameFooter = document.querySelector('#game-data-footer')
+  gameFooter.innerHTML = '';
+  h2 = document.createElement('h2');
+  h2.innerText = `Last score: ${quiz.score}`;
+  h2.id = 'last-score'
+  gameLocation.append(tryAgainButton);
+  gameFooter.append(h2)
   updateUserScore(currentUser, quiz.score);
   getLeaderboard();
   tryAgainButton.addEventListener('click', e => {
@@ -244,11 +260,11 @@ function beginGame(user) {
   // middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location');
   // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
-  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} TOP SCORE:`;
+  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`;
   if (user.top_score) {
-    topScoreLocation.children[1].innerText = user.top_score;
+    topScoreLocation.children[1].innerText = `${user.top_score}!`;
   } else {
-    topScoreLocation.children[1].innerText = 0;
+    topScoreLocation.children[1].innerText = `${0}!`;
   }
   // loc.append(middleH1)
   newQuiz(user);
