@@ -2,12 +2,37 @@
 
 /* example */
 
+img {
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+img:hover {
+    -webkit-filter: brightness(70%);
+    filter: brightness(70%);
+}
+
+
+
 body {
     background-color: ANTIQUEWHITE;
 }
 
+.well img {
+    display: inline-block;
+}
+
 #start-button {
     margin-top: 40px;
+}
+
+
+.answer-button {
+    max-height: 10em;
+    max-width: 10em;
 }
 
 .add-margin-top-10 {
@@ -23,40 +48,44 @@ body {
     text-align: center;
 }
 
+#leaderboard-location {
+    z-index: -5;
+}
+
+#correct-answer {
+    color: green;
+    font-size: medium;
+}
+
+#incorrect-answer {
+    color: red;
+}
+
 #grass-footer {
     width: 110%;
     position: fixed;
-    bottom: 0px;
-    z-index: -1
-}
-#rules-card{
-    width: 18rem; 
-    margin-top: 10px; 
-    display: none
+    bottom: -1px;
+    z-index: -10;
 }
 
-#rules-button{
+#rules-card {
+    width: 18rem;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: none;
+}
+
+#rules-button {
     margin: 20px;
+    z-index: 10;
 }
 
-#horse-button{
-    margin-right: 50px;
-    margin-top: 30px;
-    margin-left: 40px
-}
-
-#beer-button{
-    margin-right: 50px;
-    margin-top: 30px;
-    margin-left: 50px
-}
-
-#game-location{
+#game-location {
     justify-content: center;
     text-align: center;
 }
 
-#top-score-location{
+#top-score-location {
     justify-content: center;
     text-align: center;
 }

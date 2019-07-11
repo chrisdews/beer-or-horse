@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -23,79 +24,73 @@
     </nav> -->
   <div class="container">
     <div class="row title-row custom-align-center add-margin-top-10">
-      <div class="col-sm" id="top-score-location">
+      <div class="col-md-3" id="top-score-location">
         <h2></h2>
         <h1></h1>
       </div>
-      <div class="col-sm" id="question-location">
+      <div class="col-md-6" id="question-location">
         <h5>Welcome to</h5>
         <h1>Beer or Horse!</h1>
       </div>
-      <div class="col-sm" id="leaderboard-location">
-        <div>
-          <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Leaderboard</h4>
-            </div>
-            <div class="card-body">
-              <table class="list-unstyled mt-3 mb-4" id="leaderboard-table">
-                <tr id=leaderboard-row-0></tr>
-                <tr id=leaderboard-row-1></tr>
-                <tr id=leaderboard-row-2></tr>
-                <tr id=leaderboard-row-3></tr>
-                <tr id=leaderboard-row-4></tr>
-              </table>
-            </div>
+      <div class="col-lg-3 hidden-lg-down" id="leaderboard-location">
+        <div class="card mb-4 shadow-sm .d-none">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Leaderboard</h4>
           </div>
+          <divw class="table-responsive .d-none">
+            <table class="table table-hover table-sm" id="leaderboard-table">
+              <tr id=leaderboard-row-0></tr>
+              <tr id=leaderboard-row-1></tr>
+              <tr id=leaderboard-row-2></tr>
+              <tr id=leaderboard-row-3></tr>
+              <tr id=leaderboard-row-4></tr>
+            </table>
         </div>
       </div>
     </div>
-    <div class="row add-margin-top-8">
-      <div class="col-sm">
-
-      </div>
-      <!-- end of col1 -->
-      <div class="col-sm">
-        <form class="form-inline"></form>
-        <div class="form-group mx-sm-3 mb-2">
-          <label for="input-username" class="sr-only">Username</label>
-          <input type="text" class="form-control" id="input-username" placeholder="Enter your name">
-        </div>
-        </form>
-        <div class="container" id="game-location">
-          <div class="row">
-            <div class="col text-center">
-              <button class="btn btn-danger btn-lg" id="start-button">Start Game</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end of col2 -->
-      <div class="col-sm">
-
-      </div>
-    </div>
-    <!-- end of col3 -->
   </div>
+  <div class="row add-margin-top-8">
+    <!-- end of col1 -->
+    <div class="col">
+    </div>
+    <div class="col-xs justify-content-center">
+      <form class="form-inline"></form>
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="input-username" class="sr-only">Username</label>
+        <input type="text" class="form-control" id="input-username" placeholder="Enter your name">
+      </div>
+      </form>
+      <div class="">
+        <div class="col-sm" id="game-location">
+          <div class="">
+            <button class="btn btn-danger btn-lg" id="start-button">Start Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+    </div>
+
+    <!-- end of col2 -->
+  </div>
+
   <!-- end of row -->
 
-
-  <div class="row">
+  <div class="row flex-column">
     <div class="col text-center">
       <button class="btn btn-warning btn-lg" id="rules-button">Rules and Shite</button>
-    </div>
-    <div class="row rules"></div>
-    <div class="card mx-auto" id="rules-card">
-      <div class="card-body">
-        <div class="col text-center">
-          <h5 class="card-title">RULES</h5>
-          <p class="card-text">If it's a horse. Say it's a horse. If it's a beer. Say it's a beer. Good luck.</p>
-          <a href="#" class="btn btn-primary" id="read-button">I've read this</a>
+      <div class="row rules">
+        <div class="card mx-auto" id="rules-card">
+          <div class="card-body">
+            <div class="col text-center">
+              <h5 class="card-title">RULES</h5>
+              <p class="card-text">If it's a horse. Say it's a horse. If it's a beer. Say it's a beer. Good luck.</p>
+              <a href="#" class="btn btn-primary" id="read-button">I've read this</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
   </div>
 
   <div class="row grass">
