@@ -15,6 +15,11 @@ img:hover {
     filter: brightness(70%);
 }
 
+@media (max-width: 992px) {
+    .hidden-leaderboard {
+        display: none;
+    }
+}
 
 
 body {

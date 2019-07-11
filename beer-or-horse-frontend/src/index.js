@@ -75,7 +75,7 @@ function newUser(username) {
 }
 
 function newQuiz(user) {
-  leaderboardCard.className = 'not-visible';
+  leaderboardCard.className = 'hidden-leaderboard';
   currentUser = user;
   newQuizObj = {
     'user_id': user.id,
