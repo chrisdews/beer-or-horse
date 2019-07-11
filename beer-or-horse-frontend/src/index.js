@@ -22,7 +22,7 @@ const gameLocation = document.querySelector('#game-location');
 const topScoreLocation = document.querySelector('#top-score-location');
 const leaderboardLocation = document.querySelector('#leaderboard-location');
 const leaderboardTableLocation = document.querySelector('#leaderboard-table');
-
+const leaderboardCard = document.querySelector('#leaderboard-card');
 
 
 let rulesShow = false;
@@ -75,6 +75,7 @@ function newUser(username) {
 }
 
 function newQuiz(user) {
+  leaderboardCard.className = 'not-visible';
   currentUser = user;
   newQuizObj = {
     'user_id': user.id,
