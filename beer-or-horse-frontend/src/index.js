@@ -5,7 +5,6 @@ if (window.location.href.includes('heroku')) {
   BASE_URL = 'http://localhost:3000';
 }
 
-<<<<<<< HEAD
 const USERS_URL = `${BASE_URL}/users`
 const QUIZZES_URL = `${BASE_URL}/quizzes`
 const BEERS_URL = `${BASE_URL}/beers`
@@ -25,48 +24,35 @@ const topScoreLocation = document.querySelector('#top-score-location')
 const leaderboardLocation = document.querySelector('#leaderboard-location')
 const leaderboardTableLocation = document.querySelector('#leaderboard-table')
 const leaderboardCard = document.querySelector('#leaderboard-card');
-
-
+let counter = 1
 
 let rulesShow = false
 let currentUser
 let answer
 let firstGame = true
-=======
-const USERS_URL = `${BASE_URL}/users`;
-const QUIZZES_URL = `${BASE_URL}/quizzes`;
-const BEERS_URL = `${BASE_URL}/beers`;
-const HORSES_URL = `${BASE_URL}/horses`;
-const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`;
-const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`;
-
-const rulesCard = document.querySelector('#rules-card');
-const rulesButton = document.querySelector('#rules-button');
-const startButton = document.querySelector('#start-button');
-const readButton = document.querySelector('#read-button');
-const usernameInput = document.querySelector('#input-username');
-const questionLocation = document.querySelector('#question-location');
-const gameLocation = document.querySelector('#game-location');
-const topScoreLocation = document.querySelector('#top-score-location');
-const leaderboardLocation = document.querySelector('#leaderboard-location');
-const leaderboardTableLocation = document.querySelector('#leaderboard-table');
-const leaderboardCard = document.querySelector('#leaderboard-card');
-
-
-let rulesShow = false;
-let currentUser;
-let answer;
-let firstGame = true;
->>>>>>> d2dcf02b4f1e2273c5cd1bac07d6f9c5f19e9e3c
 
 // Actioncable stuff
 
 cable.subscriptions.create("QuizChannel",{
-  received: data => {console.log(data, "just started a game")}
+  // received: data => {console.log(data, "just started a game")}
+  received: data => {addGameStartedNotifications(data)}
 })
 
-// add event listener to rulesCard
+function addGameStartedNotifications(data){
+    let para = document.querySelector(`#update${counter}`)
+    console.log(data)
+    let updatetext = data
+    para.innerText = updatetext
+    para.className = 'new-player-notification text-blur-out'
+    if (counter === 5) {counter = 0}
+    counter += 1;
+}
 
+// how do we create cable to get user scores when they are posts at certain increments?
+
+
+
+// add event listener to rulesCard
 rulesButton.addEventListener('click', e => {
   rulesShow = !rulesShow;
   if (rulesShow) {
@@ -379,7 +365,7 @@ function renderLeaderboard(leaderboard) {
     '<tr id=leaderboard-row-4></tr>';
   leaderboard.forEach(quiz => {
     const index = leaderboard.indexOf(quiz);
-    user = getName(quiz.user_id, USERS_URL)
+    user = getName(quiz.user.id, USERS_URL)
       .then(user => renderLeaderboardRow(user, quiz, index));
   });
 }
@@ -415,23 +401,3 @@ function getUnique(quizzes) {
     .filter(e => quizzes[e]).map(e => quizzes[e]);
   return unique;
 }
-
-// get the top 5 scores
-
-// get the user ids for those scores
-
-// print out user names and scores
-
-
-// // action cable attempt
-// function openConnection(){
-//   return new WebSocket("ws://localhost:3000/cable")
-// }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   const userWebSocket = openConnection()
-//   userWebSocket.onopen = (event) => {
-//     const subscribeMsg = {"command":"subscribe","identifier":"{\"channel\":\"QuizChannel\"}"}
-//     userWebSocket.send(JSON.stringify(subscribeMsg))
-//   }
-// })
