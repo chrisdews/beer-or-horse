@@ -1,35 +1,36 @@
 // Check if the session is being ran locally
 if (window.location.href.includes('heroku')) {
-  BASE_URL = 'https://beer-or-horse-backend.herokuapp.com/'
+  BASE_URL = 'https://beer-or-horse-backend.herokuapp.com';
 } else {
   BASE_URL = 'http://localhost:3000'
 }
 
-const USERS_URL = `${BASE_URL}/users`
-const QUIZZES_URL = `${BASE_URL}/quizzes`
-const BEERS_URL = `${BASE_URL}/beers`
-const HORSES_URL = `${BASE_URL}/horses`
-const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`
-const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`
-const cable = ActionCable.createConsumer('wss://beer-or-horse-backend.herokuapp.com/cable')
 
-const rulesCard = document.querySelector('#rules-card')
-const rulesButton = document.querySelector('#rules-button')
-const startButton = document.querySelector('#start-button')
-const readButton = document.querySelector('#read-button')
-const usernameInput = document.querySelector('#input-username')
-const questionLocation = document.querySelector('#question-location')
-const gameLocation = document.querySelector('#game-location')
-const topScoreLocation = document.querySelector('#top-score-location')
-const leaderboardLocation = document.querySelector('#leaderboard-location')
-const leaderboardTableLocation = document.querySelector('#leaderboard-table')
-const leaderboardCard = document.querySelector('#leaderboard-card')
-let counter = 1
+const USERS_URL = `${BASE_URL}/users`;
+const QUIZZES_URL = `${BASE_URL}/quizzes`;
+const BEERS_URL = `${BASE_URL}/beers`;
+const HORSES_URL = `${BASE_URL}/horses`;
+const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`;
+const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`;
+const cable = ActionCable.createConsumer("wss://beer-or-horse-backend.herokuapp.com/cable");
 
-let rulesShow = false
-let currentUser
-let answer
-let firstGame = true
+const rulesCard = document.querySelector('#rules-card');
+const rulesButton = document.querySelector('#rules-button');
+const startButton = document.querySelector('#start-button');
+const readButton = document.querySelector('#read-button');
+const usernameInput = document.querySelector('#input-username');
+const questionLocation = document.querySelector('#question-location');
+const gameLocation = document.querySelector('#game-location');
+const topScoreLocation = document.querySelector('#top-score-location');
+const leaderboardLocation = document.querySelector('#leaderboard-location');
+const leaderboardTableLocation = document.querySelector('#leaderboard-table');
+const leaderboardCard = document.querySelector('#leaderboard-card');
+let counter = 1;
+
+let rulesShow = false;
+let currentUser;
+let answer;
+let firstGame = true;
 
 // Actioncable stuff
 
@@ -53,8 +54,9 @@ function addGameStartedNotifications (data) {
   counter += 1
 }
 
-function resetAnimation (para) {
-  para.style.animation = 'none'
+
+function resetAnimation(para) {
+  para.style.animation = 'none';
   para.offsetHeight
   // trigger reflow
   para.style.animation = null
@@ -135,7 +137,6 @@ function addButtonFunctionality (quiz) {
   div = document.createElement('div')
   div.className = 'row justify-content-center'
 
-<<<<<<< HEAD
   horseButton = document.createElement('img');
   preHorseDiv = document.createElement('div');
   preHorseDiv.className = 'col-xs-2';
@@ -155,40 +156,9 @@ function addButtonFunctionality (quiz) {
   beerButton.setAttribute("src", 'img/beer-mug.png');
   beerDiv.className = 'col-xs-4';
   beerDiv.append(beerButton);
-=======
-  horseButton = document.createElement('img')
-  preHorseDiv = document.createElement('div')
-  preHorseDiv.className = 'col-sm'
-  horseDiv = document.createElement('div')
-  horseButton.id = 'horse-button'
-  horseButton.className = 'game-button'
-  horseButton.setAttribute('src', 'img/horse-face.png')
-  horseDiv.className = 'col-xs'
-  horseDiv.append(horseButton)
-
-  beerButton = document.createElement('img')
-  postBeerDiv = document.createElement('div')
-  postBeerDiv.className = 'col-sm'
-  beerDiv = document.createElement('div')
-  beerButton.id = 'beer-button'
-  beerButton.className = 'game-button'
-  beerButton.setAttribute('src', 'img/beer-mug.png')
-  beerDiv.className = 'col-xs'
-  beerDiv.append(beerButton)
->>>>>>> accd996008ac539fc8a8ebef07910d6341229175
 
   div.append(preHorseDiv, horseDiv, beerDiv, postBeerDiv)
-
-  // horseButton = document.createElement('button');
-  // beerButton = document.createElement('button');
-  // horseButton.id = 'horse-button';
-  // beerButton.id = 'beer-button';
-  // horseButton.className = 'btn btn-danger btn-lg btn-block';
-  // beerButton.className = 'btn btn-danger btn-lg btn-block';
-  // horseButton.innerText = '🐴';
-  // beerButton.innerText = '🍺';
-
-  loc.append(div)
+  loc.append(div);
 
   horseButton.addEventListener('click', e => {
     buttonAnimation()
@@ -211,11 +181,10 @@ function horseCheck (quiz) {
     increaseScore(quiz)
       .then(newQuestion(quiz))
   } else {
-    questionLocation.lastChild.setAttribute('id', 'incorrect-answer')
-    loseQuiz(quiz)
-    // newQuiz(currentUser)
+    questionLocation.lastChild.setAttribute("id", "incorrect-answer");
+    loseQuiz(quiz);
   }
-  console.log(quiz)
+
 }
 
 function beerCheck (quiz) {
@@ -224,11 +193,9 @@ function beerCheck (quiz) {
     increaseScore(quiz)
       .then(newQuestion(quiz))
   } else {
-    questionLocation.lastChild.setAttribute('id', 'incorrect-answer')
-    loseQuiz(quiz)
-    // newQuiz(currentUser)
+    questionLocation.lastChild.setAttribute("id", "incorrect-answer");
+    loseQuiz(quiz);
   }
-  console.log(quiz)
 }
 
 function loseQuiz (quiz) {
@@ -286,24 +253,18 @@ function updateUserScore (user, score) {
   }
 }
 
-function beginGame (user) {
-  // middleH1 = document.createElement('h1')
-  loc = document.querySelector('#game-location')
-  // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
-  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`
+
+function beginGame(user) {
+  loc = document.querySelector('#game-location');
+  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`;
   if (user.top_score) {
-<<<<<<< HEAD
+
     topScoreLocation.children[0].innerText += ` ${user.top_score}!`;
   } else {
     topScoreLocation.children[0].innerText += ` ${0}!`;
-=======
-    topScoreLocation.children[1].innerText = `${user.top_score}!`
-  } else {
-    topScoreLocation.children[1].innerText = `${0}!`
->>>>>>> accd996008ac539fc8a8ebef07910d6341229175
+
   }
-  // loc.append(middleH1)
-  newQuiz(user)
+  newQuiz(user);
 }
 
 function showRules () {
@@ -315,6 +276,7 @@ function hideRules () {
   rulesCard.style.display = 'none'
   rulesButton.innerText = 'Rules and Shite'
 }
+
 
 function horseQuestion (horse, quiz) {
   answer = 'horse'
@@ -332,6 +294,7 @@ function beerQuestion (beer, quiz) {
   checkQuestionLength()
   questionLocation.append(h1)
   console.log(answer, quiz)
+
 }
 
 function checkQuestionLength () {
@@ -380,25 +343,7 @@ function getName (id, url) {
     .then(response => response.json())
 }
 
-// function countdown (seconds) {
-//   questionLocation.innerHTML = ''
-//   h1countdown = document.createElement('h1')
-//   questionLocation.append(h1countdown)
-//   h1countdown.innerText = seconds
-//   var counter = seconds
-
-//   var interval = setInterval(() => {
-//     h1countdown.innerText = counter
-//     counter--
-//     if (counter < 0) {
-//       clearInterval(interval)
-//       h1countdown.innerText = 'GO!'
-//     };
-//   }, 1000)
-//   return seconds
-// };
-
-function getLeaderboard () {
+function getLeaderboard() {
   return fetch(QUIZZES_URL)
     .then(resp => resp.json())
     .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
@@ -437,15 +382,13 @@ function renderLeaderboardRow (user, quiz, index) {
 getLeaderboard()
 
 const getAllQuizzes = async () => {
-  const data = await fetch(QUIZZES_URL)
-  const quizzesArray = await data.json()
-  quizzesArray.sort((a, b) => (a.score) - (b.score))
-  console.log(quizzesArray)
-}
-
+  const data = await fetch(QUIZZES_URL);
+  const quizzesArray = await data.json();
+  quizzesArray.sort((a, b) => (a.score) - (b.score));
+};
 function getUnique (quizzes) {
   const unique = quizzes
-    .map(quiz => quiz.user['id'])
+    .map(quiz => quiz.user.id)
     // store the keys of the unique objects
     .map((e, i, final) => final.indexOf(e) === i && i)
     // eliminate the dead keys & store unique objects
