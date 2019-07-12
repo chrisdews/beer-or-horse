@@ -11,7 +11,7 @@ const BEERS_URL = `${BASE_URL}/beers`
 const HORSES_URL = `${BASE_URL}/horses`
 const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`
 const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`
-const cable = ActionCable.createConsumer("ws://localhost:3000/cable")
+const cable = ActionCable.createConsumer("wss://beer-or-horse-backend.herokuapp.com/cable");
 
 const rulesCard = document.querySelector('#rules-card')
 const rulesButton = document.querySelector('#rules-button')
@@ -33,23 +33,27 @@ let firstGame = true
 
 // Actioncable stuff
 
-cable.subscriptions.create("QuizChannel",{
+cable.subscriptions.create("QuizChannel", {
   // received: data => {console.log(data, "just started a game")}
-  received: data => {addGameStartedNotifications(data)}
+  received: data => {
+    addGameStartedNotifications(data)
+  }
 })
 
-function addGameStartedNotifications(data){
-    let para = document.querySelector(`#update${counter}`)
-    resetAnimation(para)
-    let updatetext = data
-    para.innerText = updatetext
-    para.style.webkitAnimation = ''
-    para.className = 'new-player-notification text-blur-out'
-    if (counter === 5) {counter = 0}
-    counter += 1;
+function addGameStartedNotifications(data) {
+  let para = document.querySelector(`#update${counter}`)
+  resetAnimation(para)
+  let updatetext = data
+  para.innerText = updatetext
+  para.style.webkitAnimation = ''
+  para.className = 'new-player-notification text-blur-out'
+  if (counter === 5) {
+    counter = 0
+  }
+  counter += 1;
 }
 
-function resetAnimation(para){
+function resetAnimation(para) {
   para.style.animation = 'none'
   para.offsetHeight
   // trigger reflow
