@@ -5,33 +5,63 @@ if (window.location.href.includes('heroku')) {
   BASE_URL = 'http://localhost:3000';
 }
 
-const USERS_URL = `${BASE_URL}/users`;
-const QUIZZES_URL = `${BASE_URL}/quizzes`;
-const BEERS_URL = `${BASE_URL}/beers`;
-const HORSES_URL = `${BASE_URL}/horses`;
-const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`;
-const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`;
+const USERS_URL = `${BASE_URL}/users`
+const QUIZZES_URL = `${BASE_URL}/quizzes`
+const BEERS_URL = `${BASE_URL}/beers`
+const HORSES_URL = `${BASE_URL}/horses`
+const BEER_QUESTIONS_URL = `${BASE_URL}/beer_questions`
+const HORSE_QUESTIONS_URL = `${BASE_URL}/horse_questions`
+const cable = ActionCable.createConsumer("ws://localhost:3000/cable")
 
-const rulesCard = document.querySelector('#rules-card');
-const rulesButton = document.querySelector('#rules-button');
-const startButton = document.querySelector('#start-button');
-const readButton = document.querySelector('#read-button');
-const usernameInput = document.querySelector('#input-username');
-const questionLocation = document.querySelector('#question-location');
-const gameLocation = document.querySelector('#game-location');
-const topScoreLocation = document.querySelector('#top-score-location');
-const leaderboardLocation = document.querySelector('#leaderboard-location');
-const leaderboardTableLocation = document.querySelector('#leaderboard-table');
+const rulesCard = document.querySelector('#rules-card')
+const rulesButton = document.querySelector('#rules-button')
+const startButton = document.querySelector('#start-button')
+const readButton = document.querySelector('#read-button')
+const usernameInput = document.querySelector('#input-username')
+const questionLocation = document.querySelector('#question-location')
+const gameLocation = document.querySelector('#game-location')
+const topScoreLocation = document.querySelector('#top-score-location')
+const leaderboardLocation = document.querySelector('#leaderboard-location')
+const leaderboardTableLocation = document.querySelector('#leaderboard-table')
 const leaderboardCard = document.querySelector('#leaderboard-card');
+let counter = 1
+
+let rulesShow = false
+let currentUser
+let answer
+let firstGame = true
+
+// Actioncable stuff
+
+cable.subscriptions.create("QuizChannel",{
+  // received: data => {console.log(data, "just started a game")}
+  received: data => {addGameStartedNotifications(data)}
+})
+
+function addGameStartedNotifications(data){
+    let para = document.querySelector(`#update${counter}`)
+    resetAnimation(para)
+    let updatetext = data
+    para.innerText = updatetext
+    para.style.webkitAnimation = ''
+    para.className = 'new-player-notification text-blur-out'
+    if (counter === 5) {counter = 0}
+    counter += 1;
+}
+
+function resetAnimation(para){
+  para.style.animation = 'none'
+  para.offsetHeight
+  // trigger reflow
+  para.style.animation = null
+
+}
+
+// how do we create cable to get user scores at certain increments?
 
 
-let rulesShow = false;
-let currentUser;
-let answer;
-let firstGame = true;
 
 // add event listener to rulesCard
-
 rulesButton.addEventListener('click', e => {
   rulesShow = !rulesShow;
   if (rulesShow) {
@@ -102,6 +132,7 @@ function addButtonFunctionality(quiz) {
   preHorseDiv.className = 'col-sm';
   horseDiv = document.createElement('div');
   horseButton.id = 'horse-button';
+  horseButton.className = 'game-button'
   horseButton.setAttribute("src", 'img/horse-face.png');
   horseDiv.className = 'col-xs';
   horseDiv.append(horseButton);
@@ -111,6 +142,7 @@ function addButtonFunctionality(quiz) {
   postBeerDiv.className = 'col-sm';
   beerDiv = document.createElement('div');
   beerButton.id = 'beer-button';
+  beerButton.className = 'game-button'
   beerButton.setAttribute("src", 'img/beer-mug.png');
   beerDiv.className = 'col-xs';
   beerDiv.append(beerButton);
@@ -179,9 +211,14 @@ function loseQuiz(quiz) {
   tryAgainButton.innerText = 'Try Again... IF YOU DARE';
   tryAgainButton.className = 'btn btn-danger btn-lg';
   gameLocation.innerHTML = '';
-  h1 = document.createElement('h1');
-  h1.innerText = `LAST SCORE: ${quiz.score}`;
-  gameLocation.append(h1, tryAgainButton);
+
+  const gameFooter = document.querySelector('#game-data-footer')
+  gameFooter.innerHTML = '';
+  h2 = document.createElement('h2');
+  h2.innerText = `Last score: ${quiz.score}`;
+  h2.id = 'last-score'
+  gameLocation.append(tryAgainButton);
+  gameFooter.append(h2)
   updateUserScore(currentUser, quiz.score);
   getLeaderboard();
   tryAgainButton.addEventListener('click', e => {
@@ -223,11 +260,11 @@ function beginGame(user) {
   // middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location');
   // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
-  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} TOP SCORE:`;
+  topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`;
   if (user.top_score) {
-    topScoreLocation.children[1].innerText = user.top_score;
+    topScoreLocation.children[1].innerText = `${user.top_score}!`;
   } else {
-    topScoreLocation.children[1].innerText = 0;
+    topScoreLocation.children[1].innerText = `${0}!`;
   }
   // loc.append(middleH1)
   newQuiz(user);
@@ -329,7 +366,7 @@ function getLeaderboard() {
   return fetch(QUIZZES_URL)
     .then(resp => resp.json())
     .then(allQuizzes => allQuizzes.sort((a, b) => b.score - a.score))
-    .then(sortedQuizzes => getUnique(sortedQuizzes, 'user_id'))
+    .then(sortedQuizzes => getUnique(sortedQuizzes))
     .then(uniqueQuizzes => uniqueQuizzes.slice(0, 5))
     .then(leaderboard => renderLeaderboard(leaderboard));
 }
@@ -344,7 +381,7 @@ function renderLeaderboard(leaderboard) {
     '<tr id=leaderboard-row-4></tr>';
   leaderboard.forEach(quiz => {
     const index = leaderboard.indexOf(quiz);
-    user = getName(quiz.user_id, USERS_URL)
+    user = getName(quiz.user.id, USERS_URL)
       .then(user => renderLeaderboardRow(user, quiz, index));
   });
 }
@@ -371,18 +408,12 @@ const getAllQuizzes = async () => {
   console.log(quizzesArray);
 };
 
-function getUnique(arr, comp) {
-  const unique = arr
-    .map(e => e[comp])
+function getUnique(quizzes) {
+  const unique = quizzes
+    .map(quiz => quiz.user["id"])
     // store the keys of the unique objects
     .map((e, i, final) => final.indexOf(e) === i && i)
     // eliminate the dead keys & store unique objects
-    .filter(e => arr[e]).map(e => arr[e]);
+    .filter(e => quizzes[e]).map(e => quizzes[e]);
   return unique;
 }
-
-// get the top 5 scores
-
-// get the user ids for those scores
-
-// print out user names and scores
