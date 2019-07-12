@@ -41,7 +41,7 @@ cable.subscriptions.create('QuizChannel', {
   }
 })
 
-function addGameStartedNotifications (data) {
+function addGameStartedNotifications(data) {
   let para = document.querySelector(`#update${counter}`)
   resetAnimation(para)
   let updatetext = data
@@ -78,7 +78,7 @@ readButton.addEventListener('click', hideRules)
 
 startButton.addEventListener('click', startGame)
 
-function startGame () {
+function startGame() {
   startButton.style.display = 'none'
   rulesButton.style.display = 'none'
   hideRules()
@@ -89,32 +89,33 @@ function startGame () {
   newUser(username)
 }
 
-function newUser (username) {
+function newUser(username) {
   if (currentUser) {
     beginGame(currentUser)
   } else {
     fetch(USERS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'name': username
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'name': username
+        })
       })
-    })
       .then(resp => resp.json())
       .then(user => {
         if (user.id) {
           beginGame(user)
         } else {
+          alert('Invalid username!');
           location.reload();
         }
-})
-      .catch(alert('Invalid username!'))
+      });
+    // .catch(alert('Invalid username!'));
   }
 }
 
-function newQuiz (user) {
+function newQuiz(user) {
   leaderboardCard.className = 'hidden-leaderboard'
   currentUser = user
   newQuizObj = {
@@ -122,17 +123,17 @@ function newQuiz (user) {
     'score': 0
   }
   fetch(QUIZZES_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newQuizObj)
-  })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuizObj)
+    })
     .then(resp => resp.json())
     .then(addButtonFunctionality)
 }
 
-function addButtonFunctionality (quiz) {
+function addButtonFunctionality(quiz) {
   loc = document.querySelector('#game-location')
   div = document.createElement('div')
   div.className = 'row justify-content-center'
@@ -171,11 +172,11 @@ function addButtonFunctionality (quiz) {
   newQuestion(quiz)
 }
 
-function buttonAnimation () {
+function buttonAnimation() {
 
 }
 
-function horseCheck (quiz) {
+function horseCheck(quiz) {
   if (answer === 'horse') {
     questionLocation.lastChild.setAttribute('id', 'correct-answer')
     increaseScore(quiz)
@@ -187,7 +188,7 @@ function horseCheck (quiz) {
 
 }
 
-function beerCheck (quiz) {
+function beerCheck(quiz) {
   if (answer === 'beer') {
     questionLocation.lastChild.setAttribute('id', 'correct-answer')
     increaseScore(quiz)
@@ -198,7 +199,7 @@ function beerCheck (quiz) {
   }
 }
 
-function loseQuiz (quiz) {
+function loseQuiz(quiz) {
   firstGame = false
   buttons = document.querySelectorAll('button')
   buttons.forEach(button => {
@@ -224,7 +225,7 @@ function loseQuiz (quiz) {
   })
 }
 
-function increaseScore (quiz) {
+function increaseScore(quiz) {
   ++quiz.score
   return fetch(`${QUIZZES_URL}/${quiz.id}`, {
     method: 'PATCH',
@@ -235,17 +236,17 @@ function increaseScore (quiz) {
   }).then(response => response.json())
 }
 
-function updateUserScore (user, score) {
+function updateUserScore(user, score) {
   if (user.top_score <= score) {
     return fetch(`${USERS_URL}/${user.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        top_score: score
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        method: 'PATCH',
+        body: JSON.stringify({
+          top_score: score
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then(response => response.json())
       .then(user => {
         currentUser = user
@@ -267,18 +268,18 @@ function beginGame(user) {
   newQuiz(user);
 }
 
-function showRules () {
+function showRules() {
   rulesCard.style.display = 'block'
   rulesButton.innerText += ' ⬇'
 }
 
-function hideRules () {
+function hideRules() {
   rulesCard.style.display = 'none'
   rulesButton.innerText = 'Rules and Shite'
 }
 
 
-function horseQuestion (horse, quiz) {
+function horseQuestion(horse, quiz) {
   answer = 'horse'
   h1 = document.createElement('h1')
   h1.innerText = horse.name
@@ -287,7 +288,7 @@ function horseQuestion (horse, quiz) {
   console.log(answer, quiz)
 }
 
-function beerQuestion (beer, quiz) {
+function beerQuestion(beer, quiz) {
   answer = 'beer'
   h1 = document.createElement('h1')
   h1.innerText = beer.name
@@ -297,13 +298,13 @@ function beerQuestion (beer, quiz) {
 
 }
 
-function checkQuestionLength () {
+function checkQuestionLength() {
   if (questionLocation.childNodes.length === 5) {
     questionLocation.childNodes[0].remove()
   }
 }
 
-function newQuestion (quiz) {
+function newQuestion(quiz) {
   random = Math.floor(Math.random() * 2)
   if (random === 1) {
     questionRequest(quiz, BEER_QUESTIONS_URL)
@@ -314,21 +315,21 @@ function newQuestion (quiz) {
   }
 }
 
-function questionRequest (quiz, url) {
+function questionRequest(quiz, url) {
   fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'quiz_id': quiz.id
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'quiz_id': quiz.id
+      })
     })
-  })
     .then(resp => resp.json())
     .then(question => askQuestion(quiz, question))
 }
 
-function askQuestion (quiz, question) {
+function askQuestion(quiz, question) {
   if (question.beer_id) {
     getName(question.beer_id, BEERS_URL)
       .then(beer => beerQuestion(beer, quiz))
@@ -338,7 +339,7 @@ function askQuestion (quiz, question) {
   }
 }
 
-function getName (id, url) {
+function getName(id, url) {
   return fetch(`${url}/${id}`)
     .then(response => response.json())
 }
@@ -352,7 +353,7 @@ function getLeaderboard() {
     .then(leaderboard => renderLeaderboard(leaderboard))
 }
 
-function renderLeaderboard (leaderboard) {
+function renderLeaderboard(leaderboard) {
   // clear function replaces innerHTML
   leaderboardTableLocation.innerHTML =
     '<tr id=leaderboard-row-0></tr>' +
@@ -367,7 +368,7 @@ function renderLeaderboard (leaderboard) {
   })
 }
 
-function renderLeaderboardRow (user, quiz, index) {
+function renderLeaderboardRow(user, quiz, index) {
   const leaderboardRow = document.querySelector(`#leaderboard-row-${index}`)
 
   let nameTd = document.createElement('td')
@@ -386,7 +387,8 @@ const getAllQuizzes = async () => {
   const quizzesArray = await data.json();
   quizzesArray.sort((a, b) => (a.score) - (b.score));
 };
-function getUnique (quizzes) {
+
+function getUnique(quizzes) {
   const unique = quizzes
     .map(quiz => quiz.user.id)
     // store the keys of the unique objects
