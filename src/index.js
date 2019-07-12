@@ -34,31 +34,35 @@ let firstGame = true;
 // Actioncable stuff
 
 cable.subscriptions.create("QuizChannel", {
+  // received: data => {console.log(data, "just started a game")}
   received: data => {
-    addGameStartedNotifications(data);
+    addGameStartedNotifications(data)
   }
-});
+})
 
 function addGameStartedNotifications(data) {
-  let para = document.querySelector(`#update${counter}`);
-  resetAnimation(para);
-  let updatetext = data;
-  para.innerText = updatetext;
-  para.style.webkitAnimation = '';
-  para.className = 'new-player-notification text-blur-out';
+  let para = document.querySelector(`#update${counter}`)
+  resetAnimation(para)
+  let updatetext = data
+  para.innerText = updatetext
+  para.style.webkitAnimation = ''
+  para.className = 'new-player-notification text-blur-out'
   if (counter === 5) {
-    counter = 0;
+    counter = 0
   }
   counter += 1;
 }
 
 function resetAnimation(para) {
-  para.style.animation = 'none';
-  para.offsetHeight;
+  para.style.animation = 'none'
+  para.offsetHeight
   // trigger reflow
-  para.style.animation = null;
+  para.style.animation = null
 
 }
+
+// how do we create cable to get user scores at certain increments?
+
 
 
 // add event listener to rulesCard
@@ -132,7 +136,7 @@ function addButtonFunctionality(quiz) {
   preHorseDiv.className = 'col-sm';
   horseDiv = document.createElement('div');
   horseButton.id = 'horse-button';
-  horseButton.className = 'game-button';
+  horseButton.className = 'game-button'
   horseButton.setAttribute("src", 'img/horse-face.png');
   horseDiv.className = 'col-xs';
   horseDiv.append(horseButton);
@@ -142,7 +146,7 @@ function addButtonFunctionality(quiz) {
   postBeerDiv.className = 'col-sm';
   beerDiv = document.createElement('div');
   beerButton.id = 'beer-button';
-  beerButton.className = 'game-button';
+  beerButton.className = 'game-button'
   beerButton.setAttribute("src", 'img/beer-mug.png');
   beerDiv.className = 'col-xs';
   beerDiv.append(beerButton);
@@ -185,6 +189,7 @@ function horseCheck(quiz) {
     loseQuiz(quiz);
     // newQuiz(currentUser)
   }
+  console.log(quiz);
 }
 
 function beerCheck(quiz) {
@@ -197,6 +202,7 @@ function beerCheck(quiz) {
     loseQuiz(quiz);
     // newQuiz(currentUser)
   }
+  console.log(quiz);
 }
 
 function loseQuiz(quiz) {
@@ -210,13 +216,13 @@ function loseQuiz(quiz) {
   tryAgainButton.className = 'btn btn-danger btn-lg';
   gameLocation.innerHTML = '';
 
-  const gameFooter = document.querySelector('#game-data-footer');
+  const gameFooter = document.querySelector('#game-data-footer')
   gameFooter.innerHTML = '';
   h2 = document.createElement('h2');
   h2.innerText = `Last score: ${quiz.score}`;
-  h2.id = 'last-score';
+  h2.id = 'last-score'
   gameLocation.append(tryAgainButton);
-  gameFooter.append(h2);
+  gameFooter.append(h2)
   updateUserScore(currentUser, quiz.score);
   getLeaderboard();
   tryAgainButton.addEventListener('click', e => {
@@ -284,6 +290,7 @@ function horseQuestion(horse, quiz) {
   h1.innerText = horse.name;
   checkQuestionLength();
   questionLocation.append(h1);
+  console.log(answer, quiz);
 }
 
 function beerQuestion(beer, quiz) {
@@ -292,6 +299,7 @@ function beerQuestion(beer, quiz) {
   h1.innerText = beer.name;
   checkQuestionLength();
   questionLocation.append(h1);
+  console.log(answer, quiz);
 }
 
 function checkQuestionLength() {
@@ -304,8 +312,10 @@ function newQuestion(quiz) {
   random = Math.floor(Math.random() * 2);
   if (random === 1) {
     questionRequest(quiz, BEER_QUESTIONS_URL);
+    console.log(quiz);
   } else {
     questionRequest(quiz, HORSE_QUESTIONS_URL);
+    console.log(quiz);
   }
 }
 
@@ -338,6 +348,24 @@ function getName(id, url) {
     .then(response => response.json());
 }
 
+// function countdown (seconds) {
+//   questionLocation.innerHTML = ''
+//   h1countdown = document.createElement('h1')
+//   questionLocation.append(h1countdown)
+//   h1countdown.innerText = seconds
+//   var counter = seconds
+
+//   var interval = setInterval(() => {
+//     h1countdown.innerText = counter
+//     counter--
+//     if (counter < 0) {
+//       clearInterval(interval)
+//       h1countdown.innerText = 'GO!'
+//     };
+//   }, 1000)
+//   return seconds
+// };
+
 function getLeaderboard() {
   return fetch(QUIZZES_URL)
     .then(resp => resp.json())
@@ -365,6 +393,7 @@ function renderLeaderboard(leaderboard) {
 function renderLeaderboardRow(user, quiz, index) {
   const leaderboardRow = document.querySelector(`#leaderboard-row-${index}`);
 
+
   let nameTd = document.createElement('td');
   nameTd.innerText = user.name;
   leaderboardRow.appendChild(nameTd);
@@ -380,11 +409,12 @@ const getAllQuizzes = async () => {
   const data = await fetch(QUIZZES_URL);
   const quizzesArray = await data.json();
   quizzesArray.sort((a, b) => (a.score) - (b.score));
+  console.log(quizzesArray);
 };
 
 function getUnique(quizzes) {
   const unique = quizzes
-    .map(quiz => quiz.user.id)
+    .map(quiz => quiz.user["id"])
     // store the keys of the unique objects
     .map((e, i, final) => final.indexOf(e) === i && i)
     // eliminate the dead keys & store unique objects
