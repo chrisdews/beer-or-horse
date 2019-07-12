@@ -15,13 +15,27 @@
 </head>
 
 <body>
-  <!-- <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="index.html">BEER OR HORSE?</a>
+  
+  <div class="container">
+    <div class="row updates-row">
+        <div class="col-sm">
+          <p id="update1"></p>
+        </div>
+        <div class="col-sm">
+            <p id="update2"></p>
+        </div>
+        <div class="col-sm">
+            <p id="update3"></p>
+        </div>
+        <div class="col-sm">
+            <p id="update4"></p>
+        </div>
+        <div class="col-sm">
+            <p id="update5"></p>
+        </div>
+    </div>
+  </div>
 
-        <i class="fas fa-beer"></i>
-        <i class="fas fa-question"></i>
-        <i class="fas fa-horse"></i>
-    </nav> -->
   <div class="container">
     <div class="row title-row custom-align-center add-margin-top-10">
       <div class="col-md-3" id="top-score-location">
@@ -29,8 +43,10 @@
         <h1></h1>
       </div>
       <div class="col-md-6" id="question-location">
-        <h5>Welcome to</h5>
-        <h1>Beer or Horse!</h1>
+        <h5 class="tracking-in-expand-fwd0">welcome to</h5>
+        <h1 class="tracking-in-expand-fwd1">Beer</h1>
+        <h5 class="tracking-in-expand-fwd2">or</h5>
+        <h1 class="tracking-in-expand-fwd3">Horse</h1>
       </div>
       <div class="col-lg-3" id="leaderboard-location">
         <span id="leaderboard-card">
@@ -65,7 +81,7 @@
       <div class="">
         <div class="col-sm" id="game-location">
           <div class="">
-            <button class="btn btn-danger btn-lg" id="start-button">Start Game</button>
+            <button class="btn btn-danger btn-lg roll-in-left vibrate-1" id="start-button">Start Game</button>
           </div>
         </div>
       </div>
@@ -80,7 +96,7 @@
 
   <div class="row flex-column">
     <div class="col text-center">
-      <button class="btn btn-warning btn-lg" id="rules-button">Rules and Shite</button>
+      <button class="btn btn-warning btn-lg roll-in-right" id="rules-button">Rules and Shite</button>
       <div class="row rules">
         <div class="card mx-auto" id="rules-card">
           <div class="card-body">
@@ -94,11 +110,26 @@
       </div>
     </div>
   </div>
+  <div class="container"></div>
+    <div class="row game-footer text-center">
+      <div class="col-sm ">
+        
+      </div>
+      <div class="col-sm text-center" id="game-data-footer">
+        
+      </div>
+      <div class="col-sm text-center">
+        
+      </div>
+
+    </div>
+  </div>
 
   <div class="row grass">
     <img src="img/grass.png" alt="grass" id="grass-footer">
   </div>
 
+  <script type="text/javascript" src="node_modules/actioncable/lib/assets/compiled/action_cable.js"></script>
   <script type="text/javascript" src="src/index.js"></script>
 </body>
 
