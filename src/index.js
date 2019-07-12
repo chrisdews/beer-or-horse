@@ -54,7 +54,7 @@ function addGameStartedNotifications(data) {
 }
 
 function resetAnimation(para) {
-  para.style.animation = 'none'
+  para.style.animation = 'none';
   para.offsetHeight
   // trigger reflow
   para.style.animation = null
