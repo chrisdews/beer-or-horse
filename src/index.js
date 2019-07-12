@@ -153,15 +153,6 @@ function addButtonFunctionality(quiz) {
 
   div.append(preHorseDiv, horseDiv, beerDiv, postBeerDiv);
 
-  // horseButton = document.createElement('button');
-  // beerButton = document.createElement('button');
-  // horseButton.id = 'horse-button';
-  // beerButton.id = 'beer-button';
-  // horseButton.className = 'btn btn-danger btn-lg btn-block';
-  // beerButton.className = 'btn btn-danger btn-lg btn-block';
-  // horseButton.innerText = '🐴';
-  // beerButton.innerText = '🍺';
-
   loc.append(div);
 
   horseButton.addEventListener('click', e => {
@@ -187,9 +178,7 @@ function horseCheck(quiz) {
   } else {
     questionLocation.lastChild.setAttribute("id", "incorrect-answer");
     loseQuiz(quiz);
-    // newQuiz(currentUser)
   }
-  console.log(quiz);
 }
 
 function beerCheck(quiz) {
@@ -200,9 +189,7 @@ function beerCheck(quiz) {
   } else {
     questionLocation.lastChild.setAttribute("id", "incorrect-answer");
     loseQuiz(quiz);
-    // newQuiz(currentUser)
   }
-  console.log(quiz);
 }
 
 function loseQuiz(quiz) {
@@ -261,16 +248,13 @@ function updateUserScore(user, score) {
 }
 
 function beginGame(user) {
-  // middleH1 = document.createElement('h1')
   loc = document.querySelector('#game-location');
-  // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
   topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`;
   if (user.top_score) {
     topScoreLocation.children[1].innerText = `${user.top_score}!`;
   } else {
     topScoreLocation.children[1].innerText = `${0}!`;
   }
-  // loc.append(middleH1)
   newQuiz(user);
 }
 
@@ -290,7 +274,6 @@ function horseQuestion(horse, quiz) {
   h1.innerText = horse.name;
   checkQuestionLength();
   questionLocation.append(h1);
-  console.log(answer, quiz);
 }
 
 function beerQuestion(beer, quiz) {
@@ -299,7 +282,6 @@ function beerQuestion(beer, quiz) {
   h1.innerText = beer.name;
   checkQuestionLength();
   questionLocation.append(h1);
-  console.log(answer, quiz);
 }
 
 function checkQuestionLength() {
@@ -312,10 +294,8 @@ function newQuestion(quiz) {
   random = Math.floor(Math.random() * 2);
   if (random === 1) {
     questionRequest(quiz, BEER_QUESTIONS_URL);
-    console.log(quiz);
   } else {
     questionRequest(quiz, HORSE_QUESTIONS_URL);
-    console.log(quiz);
   }
 }
 
@@ -347,24 +327,6 @@ function getName(id, url) {
   return fetch(`${url}/${id}`)
     .then(response => response.json());
 }
-
-// function countdown (seconds) {
-//   questionLocation.innerHTML = ''
-//   h1countdown = document.createElement('h1')
-//   questionLocation.append(h1countdown)
-//   h1countdown.innerText = seconds
-//   var counter = seconds
-
-//   var interval = setInterval(() => {
-//     h1countdown.innerText = counter
-//     counter--
-//     if (counter < 0) {
-//       clearInterval(interval)
-//       h1countdown.innerText = 'GO!'
-//     };
-//   }, 1000)
-//   return seconds
-// };
 
 function getLeaderboard() {
   return fetch(QUIZZES_URL)
@@ -409,12 +371,11 @@ const getAllQuizzes = async () => {
   const data = await fetch(QUIZZES_URL);
   const quizzesArray = await data.json();
   quizzesArray.sort((a, b) => (a.score) - (b.score));
-  console.log(quizzesArray);
 };
 
 function getUnique(quizzes) {
   const unique = quizzes
-    .map(quiz => quiz.user["id"])
+    .map(quiz => quiz.user.id)
     // store the keys of the unique objects
     .map((e, i, final) => final.indexOf(e) === i && i)
     // eliminate the dead keys & store unique objects
