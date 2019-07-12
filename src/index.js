@@ -129,22 +129,22 @@ function addButtonFunctionality(quiz) {
 
   horseButton = document.createElement('img');
   preHorseDiv = document.createElement('div');
-  preHorseDiv.className = 'col-sm';
+  preHorseDiv.className = 'col-xs-2';
   horseDiv = document.createElement('div');
   horseButton.id = 'horse-button';
   horseButton.className = 'game-button'
   horseButton.setAttribute("src", 'img/horse-face.png');
-  horseDiv.className = 'col-xs';
+  horseDiv.className = 'col-xs-4';
   horseDiv.append(horseButton);
 
   beerButton = document.createElement('img');
   postBeerDiv = document.createElement('div');
-  postBeerDiv.className = 'col-sm';
+  postBeerDiv.className = 'col-xs-2';
   beerDiv = document.createElement('div');
   beerButton.id = 'beer-button';
   beerButton.className = 'game-button'
   beerButton.setAttribute("src", 'img/beer-mug.png');
-  beerDiv.className = 'col-xs';
+  beerDiv.className = 'col-xs-4';
   beerDiv.append(beerButton);
 
   div.append(preHorseDiv, horseDiv, beerDiv, postBeerDiv);
@@ -262,9 +262,9 @@ function beginGame(user) {
   // middleH1.innerText = `${user.name.toUpperCase()} IS THIS A BEER OR A HORSE?`
   topScoreLocation.children[0].innerText = `${user.name.toUpperCase()} your best score is:`;
   if (user.top_score) {
-    topScoreLocation.children[1].innerText = `${user.top_score}!`;
+    topScoreLocation.children[0].innerText += ` ${user.top_score}!`;
   } else {
-    topScoreLocation.children[1].innerText = `${0}!`;
+    topScoreLocation.children[0].innerText += ` ${0}!`;
   }
   // loc.append(middleH1)
   newQuiz(user);
