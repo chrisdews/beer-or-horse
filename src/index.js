@@ -35,7 +35,6 @@ let firstGame = true;
 // Actioncable stuff
 
 cable.subscriptions.create('QuizChannel', {
-  // received: data => {console.log(data, "just started a game")}
   received: data => {
     addGameStartedNotifications(data)
   }
@@ -285,7 +284,6 @@ function horseQuestion(horse, quiz) {
   h1.innerText = horse.name
   checkQuestionLength()
   questionLocation.append(h1)
-  console.log(answer, quiz)
 }
 
 function beerQuestion(beer, quiz) {
@@ -294,7 +292,6 @@ function beerQuestion(beer, quiz) {
   h1.innerText = beer.name
   checkQuestionLength()
   questionLocation.append(h1)
-  console.log(answer, quiz)
 
 }
 
@@ -308,10 +305,8 @@ function newQuestion(quiz) {
   random = Math.floor(Math.random() * 2)
   if (random === 1) {
     questionRequest(quiz, BEER_QUESTIONS_URL)
-    console.log(quiz)
   } else {
     questionRequest(quiz, HORSE_QUESTIONS_URL)
-    console.log(quiz)
   }
 }
 
